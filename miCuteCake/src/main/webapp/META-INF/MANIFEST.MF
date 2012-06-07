@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Specification-Title: miCuteCake
+Specification-Version: 1.0-SNAPSHOT
+Implementation-Title: com.iknition.micutecake
+Implementation-Version: 1.0-SNAPSHOT
