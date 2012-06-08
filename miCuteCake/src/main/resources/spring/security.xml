@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:zkc="http://www.zkoss.org/2008/zkspring/core"
+        xmlns:zksp="http://www.zkoss.org/2008/zkspring/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
+        http://www.zkoss.org/2008/zkspring/core http://www.zkoss.org/2008/zkspring/core/zkspring-core.xsd 
+        http://www.zkoss.org/2008/zkspring/security http://www.zkoss.org/2008/zkspring/security/zkspring-security.xsd">
+		
+        <security:global-method-security secured-annotations="enabled" pre-post-annotations="enabled">
+	</security:global-method-security>
+    
+    <security:http auto-config="true">
+       <!-- <intercept-url pattern="/secure/extreme/**" access="ROLE_SUPERVISOR"/>
+        <intercept-url pattern="/secure/**" access="ROLE_USER" />-->
+        <security:intercept-url pattern="/home.zul" access="ROLE_SUPERVISOR" />
+       <!-- <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
+        <security:form-login login-page="/login.zul" default-target-url="/home.zul"
+            authentication-failure-url="/login.zul?login_error=1" />
+        <security:logout logout-success-url="/login.zul"/>
+    </security:http>
+    <security:authentication-manager>
+    <security:authentication-provider>
+        <security:password-encoder hash="md5" />
+        <security:user-service>
+            <security:user name="rod" password="03154f7b91b2ed10d4a77abbd8be70ee"
+                authorities="ROLE_SUPERVISOR, ROLE_USER, ROLE_TELLER" />
+            <security:user name="dianne" password="65d15fe9156f9c4bbffd98085992a44e"
+                authorities="ROLE_USER,ROLE_TELLER" />
+            <security:user name="scott" password="2b58af6dddbd072ed27ffc86725d7d3a"
+                authorities="ROLE_USER" />
+            <security:user name="peter" password="22b5c9accc6e1ba628cedc63a72d57f8"
+                authorities="ROLE_USER" />
+        </security:user-service>
+    </security:authentication-provider>
+</security:authentication-manager>
+</beans>
+

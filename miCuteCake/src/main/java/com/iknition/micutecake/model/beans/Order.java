@@ -7,6 +7,8 @@ package com.iknition.micutecake.model.beans;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -22,7 +24,17 @@ public class Order implements Serializable{
     private BigDecimal budget;
     private OrderStatus orderStatus;
     private EventAddress eventAddr;
+    private Set<ProductHist> products = new HashSet<ProductHist>();
 
+    public Set<ProductHist> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<ProductHist> products) {
+        this.products = products;
+    }
+
+    
     public BigDecimal getBudget() {
         return budget;
     }

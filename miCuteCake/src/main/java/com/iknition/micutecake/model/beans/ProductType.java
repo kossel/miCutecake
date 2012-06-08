@@ -5,14 +5,22 @@
 package com.iknition.micutecake.model.beans;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
 /**
  *
  * @author coslit
  */
+@Entity
+@Table(name="product_type")
 public class ProductType implements Serializable{
+    @Id
+    @Column(name = "idproduct_type")
+    @GeneratedValue
     private Integer id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String description;
 
     public String getDescription() {

@@ -151,7 +151,33 @@ Copyright (C) 2004 Potix Corporation. All Rights Reserved.
 		<url-pattern>*.dsp</url-pattern>
 	</servlet-mapping>
 
+        <!--  *********  Spring Setup ****** -->
+        <context-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:/spring/applicationContext.xml</param-value>
+        </context-param>
+        <listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+        
+        <!-- /////security filter ////-->
+        
+       <!-- 
+            <filter-name>springSecurityFilterChain</filter-name>
+            <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        </filter>
+        <filter-mapping>
+            <filter-name>springSecurityFilterChain</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping> -->
+
 	<!-- /////////// -->
+        
+        
+        
 	<!-- Miscellaneous -->
 	<session-config>
 		<session-timeout>60</session-timeout>
@@ -221,4 +247,8 @@ Copyright (C) 2004 Potix Corporation. All Rights Reserved.
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
 	</welcome-file-list>
+        <error-page>
+            <error-code>403</error-code>
+            <location>/403.zul</location>
+        </error-page>  
 </web-app>
