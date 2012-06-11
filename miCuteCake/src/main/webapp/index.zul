@@ -1,3 +1,4 @@
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
 <zk>
 	<hlayout>
@@ -12,5 +13,7 @@
 			</listbox>
 		</vbox>
 	</div>
+        <button label="Volver" onClick='productTypeController.loadAll(typeList);' />
+       <!-- <button label="Volver" id="cargar" />-->
         </hlayout>
 </zk>
