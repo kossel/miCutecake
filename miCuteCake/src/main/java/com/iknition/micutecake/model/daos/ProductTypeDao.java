@@ -5,6 +5,7 @@
 package com.iknition.micutecake.model.daos;
 
 import com.iknition.micutecake.model.beans.ProductType;
+import org.springframework.stereotype.Repository;
 
 /**
  *

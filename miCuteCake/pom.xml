@@ -11,7 +11,7 @@
 		<org.springframework.version>3.1.1.RELEASE</org.springframework.version>
 		<hibernate.version>4.1.4.Final</hibernate.version>
                 <hibernate.annotation.ver>3.5.6-Final</hibernate.annotation.ver>
-                <hibernate.annotationcomun.ver>3.3.0.ga</hibernate.annotationcomun.ver>
+                <hibernate.annotationcomun.ver>4.0.1.Final</hibernate.annotationcomun.ver>
                 <spring.security.version>3.1.0.RELEASE</spring.security.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<packname>-0.0.1-SNAPSHOT-FL-${maven.build.timestamp}</packname>
@@ -137,14 +137,14 @@
                     <artifactId>hibernate-c3p0</artifactId>
                     <version>${hibernate.version}</version>
                 </dependency>
-                <dependency>
+               <!-- <dependency>
                         <groupId>org.hibernate</groupId>
                         <artifactId>hibernate-annotations</artifactId>
                         <version>${hibernate.annotation.ver}</version>
-                </dependency>
+                </dependency>-->
 
                 <dependency>
-                        <groupId>org.hibernate</groupId>
+                        <groupId>org.hibernate.common</groupId>
                         <artifactId>hibernate-commons-annotations</artifactId>
                         <version>${hibernate.annotationcomun.ver}</version>
                 </dependency>
@@ -152,6 +152,11 @@
                     <groupId>javax.transaction</groupId>
                     <artifactId>jta</artifactId>
                     <version>1.1</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <version>1.5.8</version>
                 </dependency>
         <!-- Spring Security Support             -->
         <dependency>

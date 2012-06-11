@@ -24,7 +24,7 @@ public interface GenericDao<DomainObject, KeyType> {
 
     public List<DomainObject> getList();
     
-    public void deleteAll();
+   // public void deleteAll();
     
     public int count();
 	    

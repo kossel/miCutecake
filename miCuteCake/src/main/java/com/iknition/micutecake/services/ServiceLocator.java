@@ -1,0 +1,27 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.iknition.micutecake.services;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.zkoss.zkplus.spring.SpringUtil;
+
+/**
+ *
+ * @author Yichao
+ */
+public class ServiceLocator {
+     private ServiceLocator() {}
+ 
+    public static Session getHibernateSession() {
+        return ((SessionFactory) SpringUtil.getBean("sessionFactory", SessionFactory.class)).getCurrentSession();
+    }
+     
+    public static <T> T getBean(Class<T> clase) {
+        System.out.println("bean name "+clase.getSimpleName());
+        return (T)SpringUtil.getBean(clase.getSimpleName(), clase);
+    }
+     
+}

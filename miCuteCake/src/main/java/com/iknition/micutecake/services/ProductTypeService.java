@@ -4,10 +4,12 @@
  */
 package com.iknition.micutecake.services;
 
+import java.util.List;
+
 /**
  *
- * @author coslit
+ * @author Yichao
  */
-public class ProductTypeService {
-    
+public interface ProductTypeService {
+    public List getAll();
 }

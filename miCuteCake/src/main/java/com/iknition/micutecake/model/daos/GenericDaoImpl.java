@@ -9,8 +9,9 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  *
@@ -18,14 +19,27 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public abstract class GenericDaoImpl <T extends Serializable, 
                                         KeyType extends Serializable>
-                                        extends HibernateDaoSupport{
+                                        //extends HibernateDaoSupport
+{
 
     protected Class<T> domainClass = getDomainClass();
-
+    
+    @Autowired
+    private SessionFactory sessionFactory;
+    
     public GenericDaoImpl() {
         this.domainClass = (Class<T>) ((ParameterizedType) getClass()
                                 .getGenericSuperclass()).getActualTypeArguments()[0];
      }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+    
     
     /**
      * Method to return the class of the domain object
@@ -33,33 +47,35 @@ public abstract class GenericDaoImpl <T extends Serializable,
     protected Class<T> getDomainClass(){
         return this.domainClass;
     };
-
+    
+ 
     public T load(KeyType id) {
-        return (T) getHibernateTemplate().load(domainClass, id);
+        return (T) this.getSessionFactory().getCurrentSession().load(domainClass, id);
     }
 
     public void update(T t) {
-        getHibernateTemplate().update(t);
+        this.getSessionFactory().getCurrentSession().update(t);
     }
 
     public void save(T t) {
-        getHibernateTemplate().save(t);
+        this.getSessionFactory().getCurrentSession().save(t);
     }
 
     public void delete(T t) {
-        getHibernateTemplate().delete(t);
+        this.getSessionFactory().getCurrentSession().delete(t);
     }
 
     public List<T> getList() {
-        return (getHibernateTemplate().find("from " + domainClass.getName() + " x"));
+        List list = getSessionFactory().getCurrentSession().createQuery("from " + domainClass.getName() + " x").list();
+        return list;
     }
 
     public void deleteById(KeyType id) {
         Object obj = load(id);
-        getHibernateTemplate().delete(obj);
+        this.getSessionFactory().getCurrentSession().delete(obj);
     }
 
-    public void deleteAll() {
+   /* public void deleteAll() {
         getHibernateTemplate().execute(new HibernateCallback() {
             @Override
             public Object doInHibernate(Session session) throws HibernateException {
@@ -69,11 +85,11 @@ public abstract class GenericDaoImpl <T extends Serializable,
             }
 
         });
-    }
+    }*/
 
     public int count() {
-        List list = getHibernateTemplate().find(
-                "select count(*) from " + domainClass.getName() + " x");
+        List list = this.getSessionFactory().getCurrentSession().createQuery(
+                "select count(*) from " + domainClass.getName() + " x").list();
         Integer count = (Integer) list.get(0);
         return count.intValue();
     }

@@ -1,6 +1,16 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
 <zk>
-	<window title="Hello World!!" border="normal" width="500px" 
-		apply="com.iknition.micutecake.DemoWindowComposer">
-		
-	</window>
+	<hlayout>
+	<div id="companyDiv" apply="com.iknition.micutecake.controller.ProductTypeController">
+		<vbox>
+			<listbox id="typeList" width="450px" height="300px">
+				<listhead>
+					<listheader width="50px" label="id" sort="auto(id)" />
+					<listheader width="250px" label="name" sort="auto(name)" />
+					<listheader width="140px" label="description" sort="auto(description)" />
+				</listhead>
+			</listbox>
+		</vbox>
+	</div>
+        </hlayout>
 </zk>
