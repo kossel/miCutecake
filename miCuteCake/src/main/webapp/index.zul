@@ -13,7 +13,7 @@
 			</listbox>
 		</vbox>
 	</div>
-        <button label="load" id="load"/>
-       <!-- <button label="Volver" id="cargar" />-->
+            <button label="load" id="load"/>
+            <button label="Nuevo" id="new"/>
         </hlayout>
 </zk>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<window id="modalProductType" title="Nuevo tipo de producto" border="normal" width="420px"
+    closable="true" position="center,center">
+    
+    <grid>
+        <columns>
+                <column hflex="1"/>
+                <column hflex="2"/>
+        </columns>
+        <rows>
+                <row>
+                    Nombre:
+                     <textbox value="" hflex="1" tabindex="1" />
+                </row>
+                <row>
+                     Description:
+                      <textbox rows="5" hflex="1" tabindex="2" />
+                </row>
+                <row>
+                    <cell colspan="2" style="text-align:center">
+                        <hlayout>
+                            <button width="100px" label="Aceptar"/>
+                            <button width="100px" label="Cerrar"/>
+                        </hlayout>
+                   </cell>
+                </row>
+        </rows>
+    </grid>
+        
+   
+</window>
