@@ -2,9 +2,9 @@
 <?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
 <zk>
 	<hlayout>
-	<div id="companyDiv" apply="com.iknition.micutecake.controller.ProductTypeController">
+	<div id="winDiv" apply="${productTypeController}">
 		<vbox>
-			<listbox id="typeList" width="450px" height="300px">
+			<listbox id="typeList" width="450px" height="300px" >
 				<listhead>
 					<listheader width="50px" label="id" sort="auto(id)" />
 					<listheader width="250px" label="name" sort="auto(name)" />
@@ -13,7 +13,7 @@
 			</listbox>
 		</vbox>
 	</div>
-        <button label="Volver" onClick='productTypeController.loadAll(typeList);' />
+        <button label="load" id="load"/>
        <!-- <button label="Volver" id="cargar" />-->
         </hlayout>
 </zk>

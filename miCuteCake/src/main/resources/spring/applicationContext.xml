@@ -40,7 +40,7 @@
             <property name="sessionFactory" ref="sessionFactory" />
         </bean>
 
-        
+             
         <!-- Security Configuration -->
         <import resource="security.xml"/>
 </beans>

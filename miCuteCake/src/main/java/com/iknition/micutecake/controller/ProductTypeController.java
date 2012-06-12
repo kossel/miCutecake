@@ -10,8 +10,11 @@ import com.iknition.micutecake.services.ServiceLocator;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.select.SelectorComposer;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
@@ -26,7 +29,7 @@ import org.zkoss.zul.Listbox;
  * @author Yichao
  */
 @Controller
-public class ProductTypeController extends GenericForwardComposer{
+public class ProductTypeController extends SelectorComposer {
 
     
     @Resource
@@ -40,14 +43,30 @@ public class ProductTypeController extends GenericForwardComposer{
         super.doAfterCompose(comp);
       //  binder = (AnnotateDataBinder) page.getAttribute("binder");
    //     this.productTypeService = ServiceLocator.getBean(ProductTypeService.class);
-        System.out.println("servi: "+productTypeService);
-        System.out.println("listbos "+typeList);
-        
+     //   System.out.println("insta: "+comp.getFellowIfAny("typeList").getWidgetClass());
+       // loadAll((Listbox)comp.getFellowIfAny("typeList"));
+          System.out.println("listbos "+typeList);
+          System.out.println("servi: "+productTypeService);
       //  this.typeList=(Listbox)comp.getFellowIfAny("typeList");
         
-   //     typeList.setModel(new ListModelList(productTypeService.getAll()));
-    //    typeList.setItemRenderer(new ProductTypeListRenderer());
+        typeList.setModel(new ListModelList(productTypeService.getAll()));
+        typeList.setItemRenderer(new ProductTypeListRenderer());
     }
+    
+    
+    public void onCreate(Listbox lb){
+        List lista = productTypeService.getAll();
+        System.out.println("tamano on create "+lista.size());
+        BindingListModelList model = new BindingListModelList(lista, false);
+        lb.setItemRenderer(new ProductTypeListRenderer());
+        lb.setModel(model); 
+    }
+    
+    @Listen("onAfterRender = listbox#typeList")
+    public void bam(){
+        System.out.println("BAMMMM ");
+    }
+    
     
     public void loadAll(Listbox lb){
         System.out.println("servi: "+productTypeService);
@@ -59,6 +78,7 @@ public class ProductTypeController extends GenericForwardComposer{
         lb.setModel(model);              
     }
     
+    @Listen("onClick = button#load")
     public void loadAll(){
         System.out.println("servi: "+productTypeService);
          System.out.println("listbos "+typeList);
@@ -67,8 +87,9 @@ public class ProductTypeController extends GenericForwardComposer{
         typeList.setItemRenderer(new ProductTypeListRenderer());
         typeList.setModel(model);              
     }
-
-    public void onClick$cargar() {
+    
+  //  @Listen("onCreate = listbox#typeList")
+    public void cargar() {
         System.out.println("servi: "+productTypeService);
         System.out.println("listbos "+typeList);
         BindingListModelList model = new BindingListModelList(productTypeService.getAll(), false);

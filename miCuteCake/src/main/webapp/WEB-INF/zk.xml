@@ -175,7 +175,9 @@ Copyright (C) 2006 Potix Corporation. All Rights Reserved.
 		<name>org.zkoss.zul.listbox.rod</name>
 		<value>true</value>
 	</library-property>
-
+        <system-config>
+            <disable-zscript>true</disable-zscript>
+        </system-config>
 	<!-- Turn on if you want to use IE7 compatible mode. It is useful if
 		some of JavaScript code doesn't work properly in IE8.
 	<library-property>
