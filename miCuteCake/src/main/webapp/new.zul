@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
-
 <window id="modalProductType" title="Nuevo tipo de producto" border="normal" width="420px"
-    closable="true" position="center,center">
+    closable="true" position="center,center" apply="${productTypeController}">
     
     <grid>
         <columns>
@@ -11,17 +10,21 @@
         </columns>
         <rows>
                 <row>
+                    Clave:
+                     <textbox value="" hflex="1"  readonly="true"/>
+                </row>
+                <row>
                     Nombre:
-                     <textbox value="" hflex="1" tabindex="1" />
+                     <textbox id="txtname" value="@{productType.name}" hflex="1" tabindex="1" />
                 </row>
                 <row>
                      Description:
-                      <textbox rows="5" hflex="1" tabindex="2" />
+                      <textbox value="@{productType.description}" rows="5" hflex="1" tabindex="2" />
                 </row>
                 <row>
                     <cell colspan="2" style="text-align:center">
                         <hlayout>
-                            <button width="100px" label="Aceptar"/>
+                            <button width="100px" id="save" label="Aceptar"/>
                             <button width="100px" label="Cerrar"/>
                         </hlayout>
                    </cell>

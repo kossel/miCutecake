@@ -358,12 +358,11 @@ Copyright (C) 2006 Potix Corporation. All Rights Reserved.
 	</error-page>
 	-->
 
-	<!-- Configure additional theme URIs
+	<!-- Configure additional theme URIs-->
 	<desktop-config>
-		<theme-uri>/a.css</theme-uri>
-		<theme-uri>/b**.css</theme-uri>
+		<theme-uri>/css/window.css.dsp</theme-uri>
 	</desktop-config>
-	-->
+	
 
 	<!-- Uncomment the following if you want to redirect to particular
 		page when ZK Client receives an error code.

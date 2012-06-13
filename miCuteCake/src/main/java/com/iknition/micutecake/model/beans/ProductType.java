@@ -6,11 +6,15 @@ package com.iknition.micutecake.model.beans;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author coslit
  */
+@Component
+@Scope("prototype")
 @Entity
 @Table(name="product_type")
 public class ProductType implements Serializable{
