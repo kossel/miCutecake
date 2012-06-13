@@ -37,6 +37,19 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     public void setProductDao(ProductTypeDao ptDao) {
         this.productDao = ptDao;
     }
+
+    @Override
+    @Transactional
+    public void save(ProductType productType) {
+        this.productDao.saveOrUpdate(productType);
+    }
+
+    @Override
+    @Transactional(readOnly=true)
+    public ProductType getById(Integer id) {
+        return this.productDao.load(id);
+    }
+    
     
     
     

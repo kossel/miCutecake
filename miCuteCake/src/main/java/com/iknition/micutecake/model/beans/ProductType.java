@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  *
  * @author coslit
  */
-@Component
+@Component("productType")
 @Scope("prototype")
 @Entity
 @Table(name="product_type")
@@ -27,6 +27,12 @@ public class ProductType implements Serializable{
     @Column(name = "description")
     private String description;
 
+    public void reset(){
+        this.id=null;
+        this.name=null;
+        this.description=null;
+    }
+    
     public String getDescription() {
         return description;
     }

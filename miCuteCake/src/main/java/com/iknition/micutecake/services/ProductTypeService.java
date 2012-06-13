@@ -4,6 +4,7 @@
  */
 package com.iknition.micutecake.services;
 
+import com.iknition.micutecake.model.beans.ProductType;
 import java.util.List;
 
 /**
@@ -12,4 +13,6 @@ import java.util.List;
  */
 public interface ProductTypeService {
     public List getAll();
+    public void save(ProductType productType);
+    public ProductType getById(Integer id);
 }

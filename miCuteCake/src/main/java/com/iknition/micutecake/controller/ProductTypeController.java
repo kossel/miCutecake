@@ -41,11 +41,10 @@ public class ProductTypeController extends SelectorComposer {
     @Wire
     private Listbox typeList;
     @Wire
-    private Textbox txtname;
-    
-    @Wire
+    private Textbox txtname; 
+    @Autowired
     private ProductType productType;
-
+    private Window modalProductType;
     
     
     @Override
@@ -53,7 +52,7 @@ public class ProductTypeController extends SelectorComposer {
         super.doAfterCompose(comp);
         typeList.setModel(new ListModelList(productTypeService.getAll()));
         typeList.setItemRenderer(new ProductTypeListRenderer());
-        productType = new ProductType();
+      //  productType = new ProductType();
     }
 
     @Listen("onClick = button#load")
@@ -65,6 +64,7 @@ public class ProductTypeController extends SelectorComposer {
     
      @Listen("onClick = #new")
     public void showModal(Event e) {
+        // this.productType.reset();
         Component comp = Executions.createComponents(
                 "/new.zul", null, null);
         if(comp instanceof Window) {
@@ -74,10 +74,16 @@ public class ProductTypeController extends SelectorComposer {
      
      @Listen("onClick =#save")
      public void save() throws InterruptedException {
-                ProductType p =(ProductType)SpringUtil.getBean("productType");
-		System.out.println("bean: " + this.getProductType().getName());
-                System.out.println("en txbox: "+txtname.getText());
+		productTypeService.save(this.getProductType());
 	}
+     @Listen("onSelect=#typeList")
+     public void getSelected(){
+        ProductType p =(ProductType)this.getTypeList().getSelectedItem().getValue();
+        Integer id = p.getId();
+        this.productType = this.productTypeService.getById(id);
+        System.out.println(this.productType.getName());
+        this.showModal(null);
+     }
 
     public Listbox getTypeList() {
         return typeList;

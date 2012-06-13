@@ -18,6 +18,10 @@ public interface GenericDao<DomainObject, KeyType> {
 
     public void save(DomainObject object);
 
+    public void saveOrUpdate(DomainObject object);
+    
+    public void merge(DomainObject object);
+    
     public void delete(DomainObject object);
     
     public void deleteById(KeyType id);

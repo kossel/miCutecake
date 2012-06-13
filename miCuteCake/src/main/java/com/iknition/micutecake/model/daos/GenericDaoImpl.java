@@ -50,7 +50,8 @@ public abstract class GenericDaoImpl <T extends Serializable,
     
  
     public T load(KeyType id) {
-        return (T) this.getSessionFactory().getCurrentSession().load(domainClass, id);
+    //    Session s = this.getSessionFactory().getCurrentSession();
+        return (T) this.getSessionFactory().getCurrentSession().get(domainClass, id);
     }
 
     public void update(T t) {
@@ -59,6 +60,14 @@ public abstract class GenericDaoImpl <T extends Serializable,
 
     public void save(T t) {
         this.getSessionFactory().getCurrentSession().save(t);
+    }
+    
+    public void saveOrUpdate(T t) {
+        this.getSessionFactory().getCurrentSession().saveOrUpdate(t);
+    }
+    
+    public void merge(T t) {
+        this.getSessionFactory().getCurrentSession().merge(t);
     }
 
     public void delete(T t) {
