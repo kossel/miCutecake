@@ -50,6 +50,11 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         return this.productDao.load(id);
     }
     
+    @Override
+    @Transactional
+    public void delete(Integer id){
+        this.productDao.deleteById(id);
+    }
     
     
     

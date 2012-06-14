@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
@@ -40,31 +41,35 @@ public class ProductTypeController extends SelectorComposer {
    // private AnnotateDataBinder binder;
     @Wire
     private Listbox typeList;
-    @Wire
-    private Textbox txtname; 
+
     @Autowired
     private ProductType productType;
+    
+    @Wire
     private Window modalProductType;
     
+    private int selectedIdx=-1;
     
     @Override
     public void doAfterCompose(Component comp) throws Exception {
-        super.doAfterCompose(comp);
+        super.doAfterCompose(comp);                   
         typeList.setModel(new ListModelList(productTypeService.getAll()));
-        typeList.setItemRenderer(new ProductTypeListRenderer());
+        typeList.setItemRenderer(new ProductTypeListRenderer(this.typeList,this.productTypeService));
+        System.out.println("-----------------composed---------------");
       //  productType = new ProductType();
     }
 
     @Listen("onClick = button#load")
     public void loadAll(){
         BindingListModelList model = new BindingListModelList(productTypeService.getAll(), false);
-        typeList.setItemRenderer(new ProductTypeListRenderer());
+        typeList.setItemRenderer(new ProductTypeListRenderer(this.typeList, this.productTypeService));
         typeList.setModel(model);              
     }
     
-     @Listen("onClick = #new")
+    @Listen("onClick = #new")
     public void showModal(Event e) {
-        // this.productType.reset();
+        this.selectedIdx = -1;
+        this.productType = new ProductType();
         Component comp = Executions.createComponents(
                 "/new.zul", null, null);
         if(comp instanceof Window) {
@@ -74,15 +79,30 @@ public class ProductTypeController extends SelectorComposer {
      
      @Listen("onClick =#save")
      public void save() throws InterruptedException {
-		productTypeService.save(this.getProductType());
+		
+                if(this.getProductType().getId()==null){
+                    ((ListModelList)this.typeList.getModel()).add(getProductType());
+                    System.out.println("creacion");
+                }else{
+                    ((ListModelList)typeList.getModel()).set(this.selectedIdx, this.getProductType());
+                    System.out.println("edicion");
+                }
+                productTypeService.save(this.getProductType());
+                modalProductType.detach();
 	}
-     @Listen("onSelect=#typeList")
+     
+     @Listen("onDoubleClick=#typeList")
      public void getSelected(){
         ProductType p =(ProductType)this.getTypeList().getSelectedItem().getValue();
         Integer id = p.getId();
         this.productType = this.productTypeService.getById(id);
         System.out.println(this.productType.getName());
-        this.showModal(null);
+        this.selectedIdx= typeList.getSelectedIndex();
+        Component comp = Executions.createComponents(
+                "/new.zul", null, null);
+        if(comp instanceof Window) {
+            ((Window)comp).doModal();
+        }
      }
 
     public Listbox getTypeList() {
