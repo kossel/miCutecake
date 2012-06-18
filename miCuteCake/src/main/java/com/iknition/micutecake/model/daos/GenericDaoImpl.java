@@ -75,7 +75,8 @@ public abstract class GenericDaoImpl <T extends Serializable,
     }
 
     public List<T> getList() {
-        List list = getSessionFactory().getCurrentSession().createQuery("from " + domainClass.getName() + " x").list();
+        List list = getSessionFactory().getCurrentSession().createQuery("from " + domainClass.getSimpleName() + " x").list();
+        System.out.println("from " + domainClass.getName() + " x");
         return list;
     }
 

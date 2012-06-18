@@ -25,7 +25,6 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     @Override
     @Transactional(readOnly=true)
     public List<ProductType> getAll() {
-        System.out.println("dao "+this.productDao);
         List result = productDao.getList();
         return result;
     }

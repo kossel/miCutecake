@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./lctype"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+<window title="Tipo de Conceptos" border="normal" width="600px"
+    apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.iknition.micutecake.viewmodel.ConceptTypeVM')">
+    <listbox id="lctype" model="@load(vm.conceptTypes)" selectedItem="@bind(vm.selected)" hflex="true" height="200px">
+        <template name="model" var="item">
+            <listitem >
+                <listcell label="@load(item.id)"/>                
+                <listcell label="@load(item.name)"/>
+                <listcell label="@load(item.description)"/>
+            </listitem>
+        </template>
+    </listbox>
+    <toolbar>
+        <button label="New" onClick="@command('newConceptType')" />
+        <button label="Save" onClick="@command('saveConceptType')" disabled="@load(empty vm.selected)" />
+        <button label="Delete" onClick="@command('deleteConceptType')" disabled="@load(empty vm.selected)" />
+    </toolbar>
+    <groupbox visible="@load(not empty vm.selected)" hflex="true" mold="3d">
+        <grid hflex="true" >
+              <rows>
+                <row>Id <label value="@load(vm.selected.id)"/></row>
+                <row>name <textbox value="@load(vm.selected.name)"/></row>
+                <row>Description <textbox value="@load(vm.selected.description)"/></row>
+                
+            </rows>
+        </grid>
+    </groupbox>
+</window>
+</zk>
