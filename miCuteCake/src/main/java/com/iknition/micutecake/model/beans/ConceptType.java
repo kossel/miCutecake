@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
  *
  * @author coslit
  */
-@Component("conceptType")
 @Entity
 @Table(name="concept_type")
 public class ConceptType implements Serializable {

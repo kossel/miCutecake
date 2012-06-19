@@ -24,6 +24,7 @@ public class ConceptTypeServiceImpl implements ConceptTypeService{
     @Override
     @Transactional(readOnly =true)
     public List getAll() {
+
         List result = conceptTypeDao.getList();
         return result;
     }
@@ -43,7 +44,7 @@ public class ConceptTypeServiceImpl implements ConceptTypeService{
     @Override
     @Transactional
     public void delete(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+       this.conceptTypeDao.deleteById(id);
     }
 
     public ConceptTypeDao getConceptTypeDao() {
