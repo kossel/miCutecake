@@ -43,8 +43,9 @@ public class ProductTypeController extends SelectorComposer{
    // private AnnotateDataBinder binder;
     @Wire
     private Listbox typeList;
-
-    @WireVariable
+ 
+    
+    @WireVariable 
     private ProductType productType;
     
     @Wire
