@@ -10,11 +10,13 @@ import com.iknition.micutecake.services.ProductTypeService;
 import com.iknition.micutecake.services.ServiceLocator;
 import java.util.List;
 import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.SelectorComposer;
@@ -32,29 +34,35 @@ import org.zkoss.zul.*;
  *
  * @author Yichao
  */
-@Controller
-public class ProductTypeController extends SelectorComposer {
+//@Controller
+public class ProductTypeController extends SelectorComposer{
 
     
-    @Resource
+    @WireVariable
     private ProductTypeService productTypeService;
    // private AnnotateDataBinder binder;
     @Wire
     private Listbox typeList;
 
-    @Autowired
+    @WireVariable
     private ProductType productType;
     
     @Wire
     private Window modalProductType;
     
+    private AnnotateDataBinder binder;
+    
     private int selectedIdx=-1;
     
     @Override
     public void doAfterCompose(Component comp) throws Exception {
-        super.doAfterCompose(comp);                   
-        typeList.setModel(new ListModelList(productTypeService.getAll()));
-        typeList.setItemRenderer(new ProductTypeListRenderer(this.typeList,this.productTypeService));
+        super.doAfterCompose(comp); 
+        if(typeList!=null){
+           typeList.setModel(new ListModelList(productTypeService.getAll()));
+          typeList.setItemRenderer(new ProductTypeListRenderer(this.typeList,this.productTypeService));
+        }
+        binder = new AnnotateDataBinder(comp);
+        binder.bindBean("vm", this);
         System.out.println("-----------------composed---------------");
       //  productType = new ProductType();
     }
@@ -70,16 +78,17 @@ public class ProductTypeController extends SelectorComposer {
     public void showModal(Event e) {
         this.selectedIdx = -1;
         this.productType = new ProductType();
-        Component comp = Executions.createComponents(
+        binder.loadAll();
+        this.modalProductType.setVisible(true); 
+      /*  Component comp = Executions.createComponents(
                 "/new.zul", null, null);
         if(comp instanceof Window) {
             ((Window)comp).doModal();
-        }
+        }*/
     }
      
-     @Listen("onClick =#save")
+     @Listen("onClick = window button#save")
      public void save() throws InterruptedException {
-		
                 if(this.getProductType().getId()==null){
                     ((ListModelList)this.typeList.getModel()).add(getProductType());
                     System.out.println("creacion");
@@ -87,8 +96,11 @@ public class ProductTypeController extends SelectorComposer {
                     ((ListModelList)typeList.getModel()).set(this.selectedIdx, this.getProductType());
                     System.out.println("edicion");
                 }
+                System.out.println("- ---- > "+ this.productType.getName());
+                
                 productTypeService.save(this.getProductType());
-                modalProductType.detach();
+                modalProductType.setVisible(false);
+                
 	}
      
      @Listen("onDoubleClick=#typeList")
@@ -98,13 +110,27 @@ public class ProductTypeController extends SelectorComposer {
         this.productType = this.productTypeService.getById(id);
         System.out.println(this.productType.getName());
         this.selectedIdx= typeList.getSelectedIndex();
-        Component comp = Executions.createComponents(
+        binder.loadAll();
+        this.modalProductType.setVisible(true);
+       /* Component comp = Executions.createComponents(
                 "/new.zul", null, null);
         if(comp instanceof Window) {
             ((Window)comp).doModal();
-        }
+        }*/
      }
 
+     @Listen("onClose = window")
+     public void closewin(Event e){
+         e.stopPropagation();
+         ((Window)e.getTarget()).setVisible(false);
+     }
+     
+     @Listen("onClick = window button#cancel")
+     public void cancel(Event e){
+         e.stopPropagation();
+         this.modalProductType.setVisible(false);
+     }
+     
     public Listbox getTypeList() {
         return typeList;
     }

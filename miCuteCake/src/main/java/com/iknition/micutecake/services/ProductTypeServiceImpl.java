@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Yichao
  */
-@Service
+@Service("productTypeService")
 public class ProductTypeServiceImpl implements ProductTypeService {
     
     @Resource

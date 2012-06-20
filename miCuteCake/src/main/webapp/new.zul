@@ -2,25 +2,25 @@
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./modalProductType"?>
 <window id="modalProductType" title="Nuevo tipo de producto" border="normal" width="420px"
-    closable="true" position="center,center" apply="${productTypeController}">
-    
-    <grid>
+    closable="true" position="center,center" apply="com.iknition.micutecake.controller.ProductTypeController">
+        
+  <grid id="fieldGrid">
         <columns>
                 <column hflex="1"/>
                 <column hflex="2"/>
         </columns>
         <rows>
                 <row>
-                    Clave:
-                     <textbox hflex="1" value="@{$composer.productType.id}" readonly="true"/>
+                     Clave:
+                     <textbox hflex="1" value="@bind(vm.productType.id)" readonly="true"/>
                 </row>
                 <row>
-                    Nombre:
-                     <textbox id="txtname" value="@{$composer.productType.name}" hflex="1" tabindex="1" />
+                     Nombre:
+                     <textbox id="txtname" value="@bind(vm.productType.name)" hflex="1" tabindex="1" />
                 </row>
                 <row>
                      Description:
-                      <textbox value="@{$composer.productType.description}" rows="5" hflex="1" tabindex="2" />
+                     <textbox value="@bind(vm.productType.description)" rows="5" hflex="1" tabindex="2" />
                 </row>
                 <row>
                     <cell colspan="2" style="text-align:center">
