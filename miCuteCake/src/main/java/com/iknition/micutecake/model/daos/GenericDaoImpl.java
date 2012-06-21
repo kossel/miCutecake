@@ -23,7 +23,7 @@ public abstract class GenericDaoImpl <T extends Serializable,
 {
 
     protected Class<T> domainClass = getDomainClass();
-    
+     
     @Autowired
     private SessionFactory sessionFactory;
     
@@ -66,8 +66,8 @@ public abstract class GenericDaoImpl <T extends Serializable,
         this.getSessionFactory().getCurrentSession().saveOrUpdate(t);
     }
     
-    public void merge(T t) {
-        this.getSessionFactory().getCurrentSession().merge(t);
+    public T merge(T t) {
+        return (T) this.getSessionFactory().getCurrentSession().merge(t);
     }
 
     public void delete(T t) {
@@ -85,6 +85,11 @@ public abstract class GenericDaoImpl <T extends Serializable,
         this.getSessionFactory().getCurrentSession().delete(obj);
     }
 
+    public boolean exists(KeyType id){
+        T entity = (T) getSessionFactory().getCurrentSession().get(this.domainClass, id);
+        return entity != null;
+    }
+    
    /* public void deleteAll() {
         getHibernateTemplate().execute(new HibernateCallback() {
             @Override

@@ -11,9 +11,9 @@ import java.util.List;
  *
  * @author Yichao
  */
-public interface ProductTypeService {
-    public List getAll();
-    public void save(ProductType productType);
-    public ProductType getById(Integer id);
-    public void delete(Integer id);
+public interface ProductTypeService extends GenericService<ProductType, Integer> {
+//    public List getAll();
+//    public void save(ProductType productType);
+//    public ProductType getById(Integer id);
+//    public void delete(Integer id);
 }

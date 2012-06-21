@@ -11,9 +11,9 @@ import java.util.List;
  *
  * @author coslit
  */
-public interface ConceptTypeService {
-    public List getAll();
-    public void save(ConceptType productType);
-    public ConceptType getById(Integer id);
-    public void delete(Integer id);
+public interface ConceptTypeService extends GenericService<ConceptType, Integer>{
+//    public List getAll();
+//    public void save(ConceptType productType);
+//    public ConceptType getById(Integer id);
+//    public void delete(Integer id);
 }

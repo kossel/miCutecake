@@ -20,13 +20,15 @@ public interface GenericDao<DomainObject, KeyType> {
 
     public void saveOrUpdate(DomainObject object);
     
-    public void merge(DomainObject object);
+    public DomainObject merge(DomainObject object);
     
     public void delete(DomainObject object);
     
     public void deleteById(KeyType id);
 
     public List<DomainObject> getList();
+    
+    public boolean exists(KeyType id);
     
    // public void deleteAll();
     

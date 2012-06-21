@@ -99,7 +99,7 @@ public class ProductTypeController extends SelectorComposer{
                 }
                 System.out.println("- ---- > "+ this.productType.getName());
                 
-                productTypeService.save(this.getProductType());
+                productTypeService.saveOrUpdate(this.getProductType());
                 modalProductType.setVisible(false);
                 
 	}

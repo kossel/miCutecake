@@ -17,44 +17,56 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Yichao
  */
 @Service("productTypeService")
-public class ProductTypeServiceImpl implements ProductTypeService {
+public class ProductTypeServiceImpl extends GenericServiceImpl<ProductType, Integer> implements ProductTypeService {
     
-    @Resource
-    ProductTypeDao productDao;
+   
+    private ProductTypeDao productDao;
     
-    @Override
-    @Transactional(readOnly=true)
-    public List<ProductType> getAll() {
-        List result = productDao.getList();
-        return result;
-    }
+    
+    
+//    @Override
+//    @Transactional(readOnly=true)
+//    public List<ProductType> getAll() {
+//        List result = productDao.getList();
+//        return result;
+//    }
+//
+//    public ProductTypeDao getProductDao() {
+//        return productDao;
+//    }
+//
+//    public void setProductDao(ProductTypeDao ptDao) {
+//        this.productDao = ptDao;
+//    }
+//
+//    @Override
+//    @Transactional
+//    public void save(ProductType productType) {
+//        this.productDao.saveOrUpdate(productType);
+//    }
+//
+//    @Override
+//    @Transactional(readOnly=true)
+//    public ProductType getById(Integer id) {
+//        return this.productDao.load(id);
+//    }
+//    
+//    @Override
+//    @Transactional
+//    public void delete(Integer id){
+//        this.productDao.deleteById(id);
+//    }
+//    
 
     public ProductTypeDao getProductDao() {
         return productDao;
     }
-
-    public void setProductDao(ProductTypeDao ptDao) {
-        this.productDao = ptDao;
-    }
-
-    @Override
-    @Transactional
-    public void save(ProductType productType) {
-        this.productDao.saveOrUpdate(productType);
-    }
-
-    @Override
-    @Transactional(readOnly=true)
-    public ProductType getById(Integer id) {
-        return this.productDao.load(id);
-    }
     
-    @Override
-    @Transactional
-    public void delete(Integer id){
-        this.productDao.deleteById(id);
+    @Resource
+    public void setProductDao(ProductTypeDao productDao) {
+        this.productDao = productDao;
+        this.dao=productDao;
     }
-    
     
     
 }

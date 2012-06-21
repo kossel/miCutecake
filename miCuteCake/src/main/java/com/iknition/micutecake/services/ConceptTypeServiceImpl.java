@@ -16,44 +16,55 @@ import org.springframework.transaction.annotation.Transactional;
  * @author coslit
  */
 @Service("conceptTypeService")
-public class ConceptTypeServiceImpl implements ConceptTypeService{
+public class ConceptTypeServiceImpl extends GenericServiceImpl<ConceptType, Integer> implements ConceptTypeService{
 
-    @Resource
+    
     ConceptTypeDao conceptTypeDao;
     
-    @Override
-    @Transactional(readOnly =true)
-    public List getAll() {
-
-        List result = conceptTypeDao.getList();
-        return result;
-    }
-
-    @Override
-    @Transactional
-    public void save(ConceptType conceptType) {
-        this.conceptTypeDao.saveOrUpdate(conceptType);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public ConceptType getById(Integer id) {
-        return this.conceptTypeDao.load(id);
-    }
-
-    @Override
-    @Transactional
-    public void delete(Integer id) {
-       this.conceptTypeDao.deleteById(id);
-    }
+//    @Override
+//    @Transactional(readOnly =true)
+//    public List getAll() {
+//
+//        List result = conceptTypeDao.getList();
+//        return result;
+//    }
+//
+//    @Override
+//    @Transactional
+//    public void save(ConceptType conceptType) {
+//        this.conceptTypeDao.saveOrUpdate(conceptType);
+//    }
+//
+//    @Override
+//    @Transactional(readOnly = true)
+//    public ConceptType getById(Integer id) {
+//        return this.conceptTypeDao.load(id);
+//    }
+//
+//    @Override
+//    @Transactional
+//    public void delete(Integer id) {
+//       this.conceptTypeDao.deleteById(id);
+//    }
+//
+//    public ConceptTypeDao getConceptTypeDao() {
+//        return conceptTypeDao;
+//    }
+//
+//    public void setConceptTypeDao(ConceptTypeDao conceptTypeDao) {
+//        this.conceptTypeDao = conceptTypeDao;
+//    }
 
     public ConceptTypeDao getConceptTypeDao() {
         return conceptTypeDao;
     }
 
+    @Resource
     public void setConceptTypeDao(ConceptTypeDao conceptTypeDao) {
         this.conceptTypeDao = conceptTypeDao;
+        this.dao=conceptTypeDao;
     }
+    
     
     
 }

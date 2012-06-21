@@ -30,6 +30,7 @@ public class ConceptTypeVM{
     private ListModelList<ConceptType> conceptTypes;
     private ConceptType selected;
     private String deleteMessage;
+    private int selectedIdx;
     
     @Wire("#conceptTypeModal")
     private Window conceptTypeModal;
@@ -78,7 +79,8 @@ public class ConceptTypeVM{
     
     @Command @NotifyChange("selected")
     public void saveConceptType(){
-        getConceptTypeService().save(selected);
+        getConceptTypeService().saveOrUpdate(selected);
+        this.getConceptTypes().remove(selected);
         this.getConceptTypes().add(selected);
         this.conceptTypeModal.setVisible(false);
     }
