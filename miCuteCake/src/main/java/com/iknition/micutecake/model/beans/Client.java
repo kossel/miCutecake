@@ -5,19 +5,31 @@
 package com.iknition.micutecake.model.beans;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
 /**
  *
  * @author coslit
  */
+@Entity
+@Table(name="clients")
 public class Client implements Serializable{
     
+    @Id
+    @Column(name = "idClients")
+    @GeneratedValue
     private Integer id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "address")
     private String address;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "cellphone")
     private String cellphone;
+    @Column(name = "email")
     private String email;
+    @Column(name = "facebook")
     private String facebook;
 
     public String getAddress() {

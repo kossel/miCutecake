@@ -10,6 +10,7 @@
          
         <mapping class="com.iknition.micutecake.model.beans.ProductType" />
         <mapping class="com.iknition.micutecake.model.beans.ConceptType" />
+        <mapping class="com.iknition.micutecake.model.beans.Client" />
     </session-factory>
 </hibernate-configuration>
  

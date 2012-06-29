@@ -4,7 +4,8 @@
  */
 package com.iknition.micutecake.viewmodel;
 
-import com.iknition.micutecake.model.beans.ConceptType;
+import com.iknition.micutecake.model.beans.Client;
+import com.iknition.micutecake.services.ClientService;
 import com.iknition.micutecake.services.ConceptTypeService;
 import java.util.List;
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import org.zkoss.bind.BindComposer;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.select.Selectors;
@@ -26,84 +28,101 @@ import org.zkoss.zul.Window;
  * @author coslit
  */
 //@Controller
-public class ConceptTypeVM{
-    private ListModelList<ConceptType> conceptTypes;
-    private ConceptType selected;
+public class ClientVM{
+    private ListModelList<Client> clients;
+    private Client selected;
     private String deleteMessage;
     
-    @Wire("#conceptTypeModal")
-    private Window conceptTypeModal;
+    @Wire("#clientModal")
+    private Window clientModal;
     
     @WireVariable
-    private ConceptTypeService conceptTypeService;
+    private ClientService clientService;
 
     @Init
     public void init(@ContextParam(ContextType.VIEW) Component view){
         Selectors.wireComponents(view, this, false);
     }
     
-    public ListModelList<ConceptType> getConceptTypes() {
-        if (conceptTypes == null) {
-            ConceptTypeService s = this.getConceptTypeService();
+    public ListModelList<Client> getClients() {
+        if (clients == null) {
+            ClientService s = this.getClientService();
              List a = s.getAll();
-            conceptTypes = new ListModelList<ConceptType>(a);//init the list
+            clients = new ListModelList<Client>(a);//init the list
         }
-        return conceptTypes;
+        return clients;
     }
 
-    public void setConceptTypes(ListModelList<ConceptType> conceptTypes) {
-        this.conceptTypes = conceptTypes;
+    
+    
+    public void setClients(ListModelList<Client> clients) {
+        this.clients = clients;
     }
 
 
-    public ConceptType getSelected() {
+    public Client getSelected() {
         return selected;
     }
 
     @NotifyChange("selected")
-    public void setSelected(ConceptType selected) {
+    public void setSelected(Client selected) {
         this.selected = selected;
-        this.conceptTypeModal.setVisible(true);
+        this.openModal();
+    }
+    
+    @Command
+    public void openModal(){
+        this.clientModal.setVisible(true);
     }
     
     @Command 
-    @NotifyChange({"selected","conceptTypes"})
-    public void newConceptType(){
-        ConceptType conceptType = new ConceptType();
+    @NotifyChange({"selected","clients"})
+    public void newClient(){
+        Client client = new Client();
      //   this.getConceptTypes().add(conceptType);
-        selected = conceptType;//select the new one
-        this.conceptTypeModal.setVisible(true); 
+        selected = client;//select the new one
+        this.openModal();
         
     }
     
     @Command @NotifyChange("selected")
-    public void saveConceptType(){
-        getConceptTypeService().saveOrUpdate(selected);
-        int idx = getConceptTypes().indexOf(selected);
-        this.getConceptTypes().remove(selected);
-        this.getConceptTypes().add(idx, selected);
-        this.conceptTypeModal.setVisible(false);
+    public void saveClient(){
+        getClientService().saveOrUpdate(selected);
+        int idx = getClients().indexOf(selected);
+        if(idx>0){
+            this.getClients().remove(selected);
+            this.getClients().add(idx, selected);
+        }else{
+            this.getClients().add(selected);
+        }
+        this.clientModal.setVisible(false);
     }
     
-    @Command @NotifyChange({"selected","conceptTypes", "deleteMessage"})
+    @Command @NotifyChange({"selected","clients", "deleteMessage"})
     public void deleteConceptType(){
-        this.getConceptTypeService().delete(selected.getId());//delete selected
-        this.getConceptTypes().remove(selected);
+        this.getClientService().delete(selected.getId());//delete selected
+        this.getClients().remove(selected);
         selected = null; //clean the selected
         this.deleteMessage=null;
     }
 
-    @Command @NotifyChange({"selected","conceptTypes", "deleteMessage"})
-    public void confirmDelete2(@BindingParam("item") ConceptType item ) {
+    @Command @NotifyChange({"selected","clients", "deleteMessage"})
+    public void confirmDelete2(@BindingParam("item") Client item ) {
          this.selected=item;
         deleteMessage = "Do you want to delete "+selected.getId()+" ?";
        
     }
     
     @Command
+    public void goToFacebook(@BindingParam("item") Client item){
+        String faceAddr = item.getFacebook();
+        Executions.sendRedirect("http://"+faceAddr);
+    }
+    
+    @Command
     public void cerrarModal(BindContext ctx){
             ctx.getTriggerEvent().stopPropagation();
-          this.conceptTypeModal.setVisible(false); 
+          this.clientModal.setVisible(false); 
     }
     
     @Command @NotifyChange("deleteMessage")
@@ -117,14 +136,8 @@ public class ConceptTypeVM{
         //clear the message
         deleteMessage = null;
     }
-    
-    public ConceptTypeService getConceptTypeService() {
-        return conceptTypeService;
-    }
-
-    public void setConceptTypeService(ConceptTypeService conceptTypeService) {
-        this.conceptTypeService = conceptTypeService;
-    }
+ 
+  
 
     public String getDeleteMessage() {
         return deleteMessage;
@@ -134,6 +147,15 @@ public class ConceptTypeVM{
         this.deleteMessage = deleteMessage;
     }
 
+    public ClientService getClientService() {
+        return clientService;
+    }
+
+    public void setClientService(ClientService clientService) {
+        this.clientService = clientService;
+    }
+
+    
 
     
 }

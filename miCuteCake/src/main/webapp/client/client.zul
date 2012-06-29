@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+<window border="none" width="600px"
+    apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.iknition.micutecake.viewmodel.ClientVM')">
+    <listbox model="@load(vm.clients)" selectedItem="@bind(vm.selected)" onClick="@command('openModal')" hflex="true" height="200px">
+         <listhead>
+                    <listheader hflex="min" label="id" sort="auto(id)" />
+                    <listheader hflex="2" label="name" sort="auto(name)" />
+                    <listheader hflex="4" label="cellphone" sort="auto(cellphone)" />
+                    <listheader hflex="4" label="email" sort="auto(email)" />
+                    <listheader hflex="min" label="opcion"/>
+        </listhead>
+       <template name="model" var="item">
+            <listitem >
+                <listcell label="@load(item.id)"/>                
+                <listcell label="@load(item.name)"/>
+                <listcell label="@load(item.cellphone)"/>
+                <listcell label="@load(item.email)"/>
+                <listcell><button label="Delete" onClick="@command('confirmDelete2', item=item)"/><button label="FB" onClick="@command('goToFacebook', item=item)"/></listcell>
+            </listitem>
+        </template>
+    </listbox>
+    <toolbar>
+        <button label="New" onClick="@command('newClient')" />
+        
+        <button label="Delete" onClick="@command(empty vm.selected.id? 'deleteClient':'confirmDelete')" disabled="@load(empty vm.selected)" />
+    </toolbar>
+    
+    <window id="clientModal" title="Detalles" mode="modal" onClose="@command('cerrarModal')" closable="true" position="center,center" border="normal" width="450px" visible="false">
+        <grid hflex="true" >
+             <rows>
+                <row>Id <label value="@load(vm.selected.id)"/></row>
+                <row>Nombre: <textbox value="@load(vm.selected.name) @save(vm.selected.name, before='saveClient')" hflex="1"/></row>
+                <row>Direccion: <textbox value="@load(vm.selected.address) @save(vm.selected.address, before='saveClient')" hflex="1"/></row>
+                <row>Celular: <textbox value="@load(vm.selected.cellphone) @save(vm.selected.cellphone, before='saveClient')" hflex="1"/></row>
+                <row>Tel:<textbox value="@load(vm.selected.phone) @save(vm.selected.phone, before='saveClient')" hflex="1"/></row>
+                <row>E-mail <textbox value="@load(vm.selected.email) @save(vm.selected.email, before='saveClient')" hflex="1"/></row>
+                <row>Facebook <textbox value="@load(vm.selected.facebook) @save(vm.selected.facebook, before='saveClient')" hflex="1" rows="5" tabindex="2"/></row>
+                <row>
+                    <cell colspan="2" style="text-align:center">
+                         <hlayout>
+                            <button width="100px" label="Save" onClick="@command('saveClient')" disabled="@load(empty vm.selected)" />
+                            <button width="100px" label="Cerrar" onClick="@command('cerrarModal')"/>
+                        </hlayout>
+                    </cell>
+                </row>
+           </rows>
+        </grid>
+    </window>
+    
+    <window title="Detalles" mode="modal" border="normal" width="300px" visible="@load(not empty vm.deleteMessage)">
+        <vbox hflex="true">
+            <hlayout height="50px">
+                <image src="~./zul/img/msgbox/question-btn.png"/>
+                <label value="@load(vm.deleteMessage)"/>
+            </hlayout>
+            <hbox pack="center" hflex="true">
+                <button label="Delete" onClick="@command('deleteClient')"/>
+                <button label="Cancel" onClick="@command('cancelDelete')"/>
+            </hbox>
+        </vbox>
+    </window>
+    
+</window>
+</zk>
