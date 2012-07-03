@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+<window border="none" width="600px"
+    apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.iknition.micutecake.viewmodel.EventAddrVM')">
+    <listbox model="@load(vm.eventAddrs)" selectedItem="@bind(vm.selected)" onClick="@command('openModal')" hflex="true" height="200px">
+         <listhead>
+                    <listheader hflex="min" label="id" sort="auto(id)" />
+                    <listheader hflex="2" label="alia" sort="auto(alia)" />
+                    <listheader hflex="4" label="Direccion" sort="auto(address)" />
+                    <listheader hflex="min" label="opcion"/>
+        </listhead>
+       <template name="model" var="item">
+            <listitem >
+                <listcell label="@load(item.id)"/>                
+                <listcell label="@load(item.alia)"/>
+                <listcell label="@load(item.address)"/>
+                <listcell><button label="Delete" onClick="@command('confirmDelete2', item=item)"/><button label="FB" onClick="@command('goToGoogleMap', item=item)"/></listcell>
+            </listitem>
+        </template>
+    </listbox>
+    <toolbar>
+        <button label="New" onClick="@command('newEventAddr')" />
+        
+        <button label="Delete" onClick="@command(empty vm.selected.id? 'deleteEventAddr':'confirmDelete')" disabled="@load(empty vm.selected)" />
+    </toolbar>
+    
+    <window id="eventAddrModal" title="Detalles" mode="modal" onClose="@command('cerrarModal')" closable="true" position="center,center" border="normal" width="450px" visible="false">
+        <grid hflex="true" >
+             <rows>
+                <row>Id <label value="@load(vm.selected.id)"/></row>
+                <row>Alia: <textbox value="@load(vm.selected.alia) @save(vm.selected.alia, before='saveEventAddr')" hflex="1"/></row>
+                <row>Direccion: <textbox value="@load(vm.selected.address) @save(vm.selected.address, before='saveEventAddr')" hflex="1"/></row>
+                <row>Google Map <textbox value="@load(vm.selected.map) @save(vm.selected.map, before='saveEventAddr')" hflex="1" rows="5" tabindex="2"/></row>
+                <row>
+                    <cell colspan="2" style="text-align:center">
+                         <hlayout>
+                            <button width="100px" label="Save" onClick="@command('saveEventAddr')" disabled="@load(empty vm.selected)" />
+                            <button width="100px" label="Cerrar" onClick="@command('cerrarModal')"/>
+                        </hlayout>
+                    </cell>
+                </row>
+           </rows>
+        </grid>
+    </window>
+    
+    <window title="Detalles" mode="modal" border="normal" width="300px" visible="@load(not empty vm.deleteMessage)">
+        <vbox hflex="true">
+            <hlayout height="50px">
+                <image src="~./zul/img/msgbox/question-btn.png"/>
+                <label value="@load(vm.deleteMessage)"/>
+            </hlayout>
+            <hbox pack="center" hflex="true">
+                <button label="Delete" onClick="@command('deleteEventAddr')"/>
+                <button label="Cancel" onClick="@command('cancelDelete')"/>
+            </hbox>
+        </vbox>
+    </window>
+    
+</window>
+</zk>

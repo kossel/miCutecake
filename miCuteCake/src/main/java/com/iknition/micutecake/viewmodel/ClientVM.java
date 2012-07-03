@@ -89,7 +89,7 @@ public class ClientVM{
     public void saveClient(){
         getClientService().saveOrUpdate(selected);
         int idx = getClients().indexOf(selected);
-        if(idx>0){
+        if(idx>=0){
             this.getClients().remove(selected);
             this.getClients().add(idx, selected);
         }else{
@@ -99,7 +99,7 @@ public class ClientVM{
     }
     
     @Command @NotifyChange({"selected","clients", "deleteMessage"})
-    public void deleteConceptType(){
+    public void deleteClient(){
         this.getClientService().delete(selected.getId());//delete selected
         this.getClients().remove(selected);
         selected = null; //clean the selected

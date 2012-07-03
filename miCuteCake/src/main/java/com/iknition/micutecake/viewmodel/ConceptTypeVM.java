@@ -80,8 +80,12 @@ public class ConceptTypeVM{
     public void saveConceptType(){
         getConceptTypeService().saveOrUpdate(selected);
         int idx = getConceptTypes().indexOf(selected);
-        this.getConceptTypes().remove(selected);
-        this.getConceptTypes().add(idx, selected);
+        if(idx>=0){
+            this.getConceptTypes().remove(selected);
+            this.getConceptTypes().add(idx, selected);
+        }else{
+            this.getConceptTypes().add(selected);
+        }
         this.conceptTypeModal.setVisible(false);
     }
     

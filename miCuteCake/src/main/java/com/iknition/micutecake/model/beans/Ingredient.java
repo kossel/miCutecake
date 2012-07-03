@@ -6,17 +6,29 @@ package com.iknition.micutecake.model.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.persistence.*;
 
 /**
  *
  * @author coslit
  */
+@Entity
+@Table(name="ingredients")
 public class Ingredient implements Serializable{
+    
+    @Id
+    @Column(name = "idingredient")
+    @GeneratedValue
     private Integer id;
+    @Column
     private String name;
+    @Column
     private BigDecimal price;
+    @Column
     private String description;
+    @Column
     private int quantity;
+    @Column
     private String unit;
 
     public String getDescription() {

@@ -5,16 +5,26 @@
 package com.iknition.micutecake.model.beans;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
 /**
  *
  * @author coslit
  */
+@Entity
+@Table(name="event_addr")
 public class EventAddress implements Serializable {
     
+    @Id
+    @Column(name = "idevent_addr")
+    @GeneratedValue
     private Integer id;
-    private String alias;
+    
+    @Column
+    private String alia;
+    @Column
     private String address;
+    @Column
     private String map;
 
     public String getAddress() {
@@ -25,12 +35,12 @@ public class EventAddress implements Serializable {
         this.address = address;
     }
 
-    public String getAlias() {
-        return alias;
+    public String getAlia() {
+        return alia;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
+    public void setAlia(String alia) {
+        this.alia = alia;
     }
 
     public Integer getId() {
