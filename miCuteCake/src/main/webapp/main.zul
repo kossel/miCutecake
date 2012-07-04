@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <style src="css/style.css" />
+       
+       <borderlayout  width="900px" sclass="main_page" >
+            <north height="126px">
+                <include id="header" src="header.zul" ></include>
+            </north>
+            <west width="149px">
+                 <include id="menus" src="menu.zul" ></include>
+            </west>
+            <center>
+                <include id="content" src="content.zul" ></include>
+            </center>
+            <south height="30px" >
+               <include id="footer" src="footer.zul" ></include> 
+            </south>
+        </borderlayout>
+       
+</zk>
