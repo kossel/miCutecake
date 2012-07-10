@@ -1,0 +1,56 @@
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
+<zk>
+    <div id="winDiv" apply="com.iknition.micutecake.controller.ProductTypeController">
+	<hlayout>
+	
+		<vbox>
+			<listbox id="typeList" width="690px" height="300px" >
+				<listhead>
+					<listheader hflex="min" label="id" sort="auto(id)" />
+					<listheader hflex="2" label="name" sort="auto(name)" />
+					<listheader hflex="4" label="description" sort="auto(description)" />
+                                        <listheader hflex="min" label="opcion"/>
+                                </listhead>
+			</listbox>
+		</vbox>
+            
+	
+            <button label="load" id="load"/>
+            <button label="Nuevo" id="new"/>
+        </hlayout>
+        
+        
+        <window id="modalProductType" title="Nuevo tipo de producto" border="normal" width="420px"
+                        closable="true" position="center,center" mode="modal" visible="false">
+                <grid id="fieldGrid">
+                    <columns>
+                        <column hflex="1"/>
+                        <column hflex="2"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            Clave:
+                            <textbox hflex="1" value="@bind(vm.productType.id)" readonly="true"/>
+                        </row>
+                        <row>
+                            Nombre:
+                            <textbox id="txtname" value="@bind(vm.productType.name)" hflex="1" tabindex="1" />
+                        </row>
+                        <row>
+                            Description:
+                            <textbox value="@bind(vm.productType.description)" rows="5" hflex="1" tabindex="2" />
+                        </row>
+                        <row>
+                            <cell colspan="2" style="text-align:center">
+                                <hlayout>
+                                    <button width="100px" id="save" label="Aceptar"/>
+                                    <button width="100px" id="cancel" label="Cerrar"/>
+                                </hlayout>
+                            </cell>
+                        </row>
+                    </rows>
+                </grid>   
+            </window>
+            </div>
+</zk>

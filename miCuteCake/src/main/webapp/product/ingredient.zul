@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
-<window border="none" width="600px"
+<window border="none" 
     apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.iknition.micutecake.viewmodel.IngredientVM')">
-    <listbox model="@load(vm.ingredients)" selectedItem="@bind(vm.selected)" onClick="@command('openModal')" hflex="true" height="200px">
+   <toolbar>
+        <button label="New" onClick="@command('newIngredient')" />
+        
+        <button label="Delete" onClick="@command(empty vm.selected.id? 'deleteIngredient':'confirmDelete')" disabled="@load(empty vm.selected)" />
+    </toolbar>
+   <listbox model="@load(vm.ingredients)" selectedItem="@bind(vm.selected)" onClick="@command('openModal')" hflex="true" >
          <listhead>
                     <listheader hflex="min" label="id" sort="auto(id)" />
                     <listheader hflex="4" label="Nombre" sort="auto(name)" />
@@ -24,11 +29,7 @@
             </listitem>
         </template>
     </listbox>
-    <toolbar>
-        <button label="New" onClick="@command('newIngredient')" />
-        
-        <button label="Delete" onClick="@command(empty vm.selected.id? 'deleteIngredient':'confirmDelete')" disabled="@load(empty vm.selected)" />
-    </toolbar>
+
     
     <window id="ingredientModal" title="Detalles" mode="modal" onClose="@command('cerrarModal')" closable="true" position="center,center" border="normal" width="450px" visible="false">
         <grid hflex="true" >
@@ -58,7 +59,7 @@
                 <label value="@load(vm.deleteMessage)"/>
             </hlayout>
             <hbox pack="center" hflex="true">
-                <button label="Delete" onClick="@command('deleteClient')"/>
+                <button label="Delete" onClick="@command('deleteIngredient')"/>
                 <button label="Cancel" onClick="@command('cancelDelete')"/>
             </hbox>
         </vbox>

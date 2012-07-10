@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
-<window border="none" width="600px"
+<window border="none" width="100%"
     apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.iknition.micutecake.viewmodel.EventAddrVM')">
-    <listbox model="@load(vm.eventAddrs)" selectedItem="@bind(vm.selected)" onClick="@command('openModal')" hflex="true" height="200px">
+     <toolbar>
+        <button label="New" onClick="@command('newEventAddr')" />
+        
+        <button label="Delete" onClick="@command(empty vm.selected.id? 'deleteEventAddr':'confirmDelete')" disabled="@load(empty vm.selected)" />
+    </toolbar>
+  <listbox model="@load(vm.eventAddrs)" selectedItem="@bind(vm.selected)" onClick="@command('openModal')" hflex="true" height="100%">
          <listhead>
                     <listheader hflex="min" label="id" sort="auto(id)" />
                     <listheader hflex="2" label="alia" sort="auto(alia)" />
@@ -19,11 +24,7 @@
             </listitem>
         </template>
     </listbox>
-    <toolbar>
-        <button label="New" onClick="@command('newEventAddr')" />
-        
-        <button label="Delete" onClick="@command(empty vm.selected.id? 'deleteEventAddr':'confirmDelete')" disabled="@load(empty vm.selected)" />
-    </toolbar>
+ 
     
     <window id="eventAddrModal" title="Detalles" mode="modal" onClose="@command('cerrarModal')" closable="true" position="center,center" border="normal" width="450px" visible="false">
         <grid hflex="true" >

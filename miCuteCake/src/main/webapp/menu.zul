@@ -1,40 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
-    <menubar id="menubar" orient="vertical" autodrop="true" vflex="true">
-            <menu label="Hardware">
+    <menubar id="menubar" orient="vertical" autodrop="true" vflex="true"
+     apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.iknition.micutecake.viewmodel.MenuVM')"
+    >
+            <menu label="Catalogos">
             <menupopup>
-                <menu label="Mainboard CPU &amp; RAM">
-                    <menupopup>
-                        <menuitem label="AMD" />
-                        <menuitem label="Intel"  />
-                        <menuitem label="Others" />
-                    </menupopup>
-                </menu>
-                <menu label="Input">
-                    <menupopup>
-                        <menu label="Devices">
-                            <menupopup>
-                                <menuitem label="Mouse"  />
-                                <menuitem label="Keyboards"  />
-                                <menuitem label="Accessories"  />
-                            </menupopup>
-                        </menu>
-                        <menuitem label="Gaming"  />
-                        <menuitem label="Graphic Tablets"  />
-                    </menupopup>
-                </menu>
-                <menu label="Monitors">
-                    <menupopup>
-                        <menuitem label="LCD"  />
-                        <menuitem label="CRT"  />
-                        <menuitem label="Touchscreen"  />
-                    </menupopup>
-                </menu>
-                <menuseparator></menuseparator>
-                <menuitem label="PC"  />
-                <menuitem label="Mac"  />
-                <menuitem label="Others"  />
+                <menuitem label="Tipo de Productos" onClick="@command('gotoCatProductType')"/>
+                <menuitem label="Tipo de Conceptos" onClick="@command('gotoCatConceptType')"/>
+                <menuitem label="Direccion de evento" onClick="@command('gotoCatEventAddr')"/>
+                <menuitem label="Ingredientes" onClick="@command('gotoCatIngredient')"/>
+                <menuitem label="Clientes" onClick="@command('gotoCatClient')"/>
             </menupopup>
         </menu>
         <menu label="Software">

@@ -4,8 +4,8 @@
  */
 package com.iknition.micutecake.viewmodel;
 
-import com.iknition.micutecake.model.beans.Ingredient;
-import com.iknition.micutecake.services.IngredientService;
+import com.iknition.micutecake.model.beans.ProductType;
+import com.iknition.micutecake.services.ProductTypeService;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -24,16 +24,16 @@ import org.zkoss.zul.Window;
  * @author coslit
  */
 
-public class IngredientVM {
-    private ListModelList<Ingredient> ingredients;
-    private Ingredient selected;
+public class ProductTypeVM {
+    private ListModelList<ProductType> productTypes;
+    private ProductType selected;
     private String deleteMessage;
     
-    @Wire("#ingredientModal")
-    private Window ingredientModal;
+    @Wire("#productTypeModal")
+    private Window productTypeModal;
     
     @WireVariable
-    private IngredientService ingredientService;
+    private ProductTypeService productTypeService;
 
     @Init
     public void init(@ContextParam(ContextType.VIEW) Component view){
@@ -41,23 +41,23 @@ public class IngredientVM {
         System.out.println("--composed-----");
     }
     
-    public ListModelList<Ingredient> getIngredients() {
-        if (ingredients == null) {
-            IngredientService s = this.getIngredientService();
+    public ListModelList<ProductType> getProductTypes() {
+        if (productTypes == null) {
+            ProductTypeService s = this.getProductTypeService();
              List a = s.getAll();
-            ingredients = new ListModelList<Ingredient>(a);//init the list
+            productTypes = new ListModelList<ProductType>(a);//init the list
         }
-        return ingredients;
+        return productTypes;
     }
 
     
     @NotifyChange("selected")
-    public void setSelected(Ingredient selected) {
+    public void setSelected(ProductType selected) {
         this.selected = selected;
         this.openModal();
     }
 
-    public Ingredient getSelected() {
+    public ProductType getSelected() {
         return selected;
     }
     
@@ -65,13 +65,13 @@ public class IngredientVM {
     
     @Command
     public void openModal(){
-        this.ingredientModal.setVisible(true);
+        this.productTypeModal.setVisible(true);
     }
     
     @Command 
     @NotifyChange({"selected","ingredients"})
-    public void newIngredient(){
-        Ingredient ingredient = new Ingredient();
+    public void newProductType(){
+        ProductType ingredient = new ProductType();
      //   this.getConceptTypes().add(conceptType);
         selected = ingredient;//select the new one
         this.openModal();
@@ -79,28 +79,28 @@ public class IngredientVM {
     }
     
     @Command @NotifyChange("selected")
-    public void saveIngredient(){
-        getIngredientService().saveOrUpdate(selected);
-        int idx = this.getIngredients().indexOf(selected);
+    public void saveProductType(){
+        getProductTypeService().saveOrUpdate(selected);
+        int idx = this.getProductTypes().indexOf(selected);
         if(idx>=0){
-            this.getIngredients().remove(selected);
-            this.getIngredients().add(idx, selected);
+            this.getProductTypes().remove(selected);
+            this.getProductTypes().add(idx, selected);
         }else{
-            this.getIngredients().add(selected);
+            this.getProductTypes().add(selected);
         }
-        this.ingredientModal.setVisible(false);
+        this.productTypeModal.setVisible(false);
     }
     
-    @Command @NotifyChange({"selected","ingredients", "deleteMessage"})
-    public void deleteIngredient(){
-        this.getIngredientService().delete(selected.getId());//delete selected
-        this.getIngredients().remove(selected);
+    @Command @NotifyChange({"selected","productTypes", "deleteMessage"})
+    public void deleteProductType(){
+        this.getProductTypeService().delete(selected.getId());//delete selected
+        this.getProductTypes().remove(selected);
         selected = null; //clean the selected
         this.deleteMessage=null;
     }
 
-    @Command @NotifyChange({"selected","ingredients", "deleteMessage"})
-    public void confirmDelete2(@BindingParam("item") Ingredient item ) {
+    @Command @NotifyChange({"selected","productTypes", "deleteMessage"})
+    public void confirmDelete2(@BindingParam("item") ProductType item ) {
          this.selected=item;
         deleteMessage = "Do you want to delete "+selected.getName()+" ?";
        
@@ -110,7 +110,7 @@ public class IngredientVM {
     @Command
     public void cerrarModal(BindContext ctx){
             ctx.getTriggerEvent().stopPropagation();
-          this.ingredientModal.setVisible(false); 
+          this.productTypeModal.setVisible(false); 
     }
     
     @Command @NotifyChange("deleteMessage")
@@ -135,12 +135,12 @@ public class IngredientVM {
         this.deleteMessage = deleteMessage;
     }
 
-    public IngredientService getIngredientService() {
-        return ingredientService;
+    public ProductTypeService getProductTypeService() {
+        return productTypeService;
     }
 
-    public void setIngredientService(IngredientService IngredientService) {
-        this.ingredientService = IngredientService;
+    public void setProductTypeService(ProductTypeService ProductTypeService) {
+        this.productTypeService = ProductTypeService;
     }
 
     

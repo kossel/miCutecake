@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
-<window border="none" width="600px"
-    apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.iknition.micutecake.viewmodel.ConceptTypeVM')">
-    <listbox model="@load(vm.conceptTypes)" selectedItem="@bind(vm.selected)" hflex="true" height="200px">
+<window border="none" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.iknition.micutecake.viewmodel.ProductTypeVM')" >
+    <toolbar >
+        <button label="New" onClick="@command('newProductType')" />
+        <button label="Delete" onClick="@command(empty vm.selected.id? 'deleteIngredient':'confirmDelete')" disabled="@load(empty vm.selected)" />
+    </toolbar>
+    <listbox model="@load(vm.productTypes)" selectedItem="@bind(vm.selected)" onClick="@command('openModal')" hflex="true" >
          <listhead>
                     <listheader hflex="min" label="id" sort="auto(id)" />
-                    <listheader hflex="2" label="name" sort="auto(name)" />
-                    <listheader hflex="4" label="description" sort="auto(description)" />
+                    <listheader hflex="1" label="Nombre" sort="auto(name)" />
+                    <listheader hflex="3" label="Descripcion" sort="auto(description)" />
                     <listheader hflex="min" label="opcion"/>
         </listhead>
        <template name="model" var="item">
@@ -19,22 +22,18 @@
             </listitem>
         </template>
     </listbox>
-    <toolbar>
-        <button label="New" onClick="@command('newConceptType')" />
-        
-        <button label="Delete" onClick="@command(empty vm.selected.id? 'deleteConceptType':'confirmDelete')" disabled="@load(empty vm.selected)" />
-    </toolbar>
     
-    <window id="conceptTypeModal" title="Detalles" mode="modal" onClose="@command('cerrarModal')" closable="true" position="center,center" border="normal" width="300px" visible="false">
+    
+    <window id="productTypeModal" title="Detalles" mode="modal" onClose="@command('cerrarModal')" closable="true" position="center,center" border="normal" width="450px" visible="false">
         <grid hflex="true" >
              <rows>
                 <row>Id <label value="@load(vm.selected.id)"/></row>
-                <row>name <textbox value="@load(vm.selected.name) @save(vm.selected.name, before='saveConceptType')"/></row>
-                <row>Description <textbox value="@load(vm.selected.description) @save(vm.selected.description, before='saveConceptType')"/></row>
+                <row>Nombre: <textbox value="@load(vm.selected.name) @save(vm.selected.name, before='saveProductType')" hflex="1"/></row>
+                <row>Descripcion: <textbox value="@load(vm.selected.description) @save(vm.selected.description, before='saveProductType')" hflex="1" rows="3"/></row>
                 <row>
                     <cell colspan="2" style="text-align:center">
                          <hlayout>
-                            <button width="100px" label="Save" onClick="@command('saveConceptType')" disabled="@load(empty vm.selected)" />
+                            <button width="100px" label="Save" onClick="@command('saveProductType')" disabled="@load(empty vm.selected)" />
                             <button width="100px" label="Cerrar" onClick="@command('cerrarModal')"/>
                         </hlayout>
                     </cell>
@@ -50,7 +49,7 @@
                 <label value="@load(vm.deleteMessage)"/>
             </hlayout>
             <hbox pack="center" hflex="true">
-                <button label="Delete" onClick="@command('deleteConceptType')"/>
+                <button label="Delete" onClick="@command('deleteProductType')"/>
                 <button label="Cancel" onClick="@command('cancelDelete')"/>
             </hbox>
         </vbox>

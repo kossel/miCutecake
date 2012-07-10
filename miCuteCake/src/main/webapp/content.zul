@@ -1,43 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
     
-        <div id="container" sclass="container" vflex="true">
-            <vlayout id="product_list" width="100%">
-               Top Sales
+        <div id="container" sclass="container" vflex="true" >
+            <div id="contentPlacer">
+                <vlayout id="product_list" width="100%">
+                Top Sales
                 <separator bar="true"></separator>
-                <hlayout spacing="10px">
-                    <zk forEach="${products}" if="${each le num }">
-                        <image src="/widgets/menu/menu_orientation/img/product${each}.png" />
-                    </zk>
-                </hlayout>
-                <hlayout spacing="10px">
-                    <zk forEach="${products}" if="${each gt num and each le (num * 2)}">
-                        <image src="/widgets/menu/menu_orientation/img/product${each}.png" />
-                    </zk>
-                </hlayout>
                 <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label><label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            <label> fgsfgdf </label>
-            </vlayout>
-            
-            
-            
-            
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label><label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                <label> fgsfgdf </label>
+                </vlayout>
+            </div>
         </div>
 </zk>
