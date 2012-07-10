@@ -21,12 +21,12 @@ public class EventAddrServiceImpl extends GenericServiceImpl<EventAddress, Integ
      
     private EventAddrDao eventAddrDao;
 
-    public EventAddrDao getClientDao() {
+    public EventAddrDao getEventAddrDao() {
         return eventAddrDao;
     }
 
     @Resource
-    public void setClientDao(EventAddrDao eventAddrDao) {
+    public void setEventAddrDao(EventAddrDao eventAddrDao) {
         this.eventAddrDao = eventAddrDao;
         this.dao = eventAddrDao;
     }

@@ -19,7 +19,7 @@ public class IngredientServiceImpl extends GenericServiceImpl<Ingredient, Intege
      
     private IngredientDao ingredientDao;
 
-    public IngredientDao getClientDao() {
+    public IngredientDao getIngredientDao() {
         return ingredientDao;
     }
 

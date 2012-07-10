@@ -6,16 +6,42 @@ package com.iknition.micutecake.model.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.persistence.*;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author coslit
  */
-public class Products implements Serializable{
+@Entity
+@Table(name="products")
+@Component("product")
+public class Product implements Serializable{
+    
+    @Id
+    @Column(name="idproducts")
+    @GeneratedValue
     private Integer id;
+    
+    @Column
     private String name;
+    @Column
     private String description;
+    @Column
     private BigDecimal price;
+    
+    @ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER, optional=false)
+    @JoinColumn(name="idproducttype")
+    private ProductType productType;
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
+    
 
     public String getDescription() {
         return description;
