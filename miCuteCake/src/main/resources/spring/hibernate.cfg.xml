@@ -13,6 +13,7 @@
         <mapping class="com.iknition.micutecake.model.beans.Client" />
         <mapping class="com.iknition.micutecake.model.beans.EventAddress" />
         <mapping class="com.iknition.micutecake.model.beans.Ingredient" />
+        <mapping class="com.iknition.micutecake.model.beans.Product" />
     </session-factory>
 </hibernate-configuration>
  

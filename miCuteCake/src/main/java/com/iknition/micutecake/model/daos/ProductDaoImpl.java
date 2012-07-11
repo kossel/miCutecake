@@ -5,11 +5,13 @@
 package com.iknition.micutecake.model.daos;
 
 import com.iknition.micutecake.model.beans.Product;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author coslit
  */
+@Repository
 public class ProductDaoImpl extends GenericDaoImpl<Product, Integer> implements ProductDao{
     
 }

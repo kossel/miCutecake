@@ -61,4 +61,10 @@ public class MenuVM {
         eq = EventQueues.lookup("interactive", EventQueues.DESKTOP, false);
         eq.publish(new Event("onClick", null,  "product/productType.zul"));
     }
+    
+    @Command
+    public void gotoProducts(){
+        eq = EventQueues.lookup("interactive", EventQueues.DESKTOP, false);
+        eq.publish(new Event("onClick", null,  "product/product.zul"));
+    }
 }

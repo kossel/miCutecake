@@ -13,7 +13,7 @@
                 <menuitem label="Clientes" onClick="@command('gotoCatClient')"/>
             </menupopup>
         </menu>
-        <menu label="Software">
+<!--        <menu label="Software">
             <menupopup>
                 <menuitem label="Browsers and Plugins"  />
                 <menuitem label="Firewalls and Security"  />
@@ -24,8 +24,8 @@
                 <menuitem label="Developer Tools"  />
                 <menuitem label="Others"  />
             </menupopup>
-        </menu>
-        <menuitem label="Gaming"  />
+        </menu>-->
+        <menuitem label="Products" onClick="@command('gotoProducts')"  />
         <menuitem label="TV &amp; Audio"  />
         <menuitem label="Photo &amp; Video"  />
         <menuitem label="Communication"  />

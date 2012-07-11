@@ -31,7 +31,7 @@ public class Product implements Serializable{
     private BigDecimal price;
     
     @ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER, optional=false)
-    @JoinColumn(name="idproducttype")
+    @JoinColumn(name="idproduct_type")
     private ProductType productType;
 
     public ProductType getProductType() {

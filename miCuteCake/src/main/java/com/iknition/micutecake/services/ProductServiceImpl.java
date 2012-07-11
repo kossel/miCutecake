@@ -8,11 +8,13 @@ import com.iknition.micutecake.model.beans.Product;
 import com.iknition.micutecake.model.daos.IngredientDao;
 import com.iknition.micutecake.model.daos.ProductDao;
 import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author coslit
  */
+@Service("productService")
 public class ProductServiceImpl extends GenericServiceImpl<Product, Integer> implements ProductService{
     private ProductDao productDao;
 

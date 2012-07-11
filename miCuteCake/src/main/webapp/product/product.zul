@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+<window border="none" 
+    apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.iknition.micutecake.viewmodel.ProductVM')">
+   <toolbar>
+        <button label="New" onClick="@command('newProduct')" />
+        
+        <button label="Delete" onClick="@command(empty vm.selected.id? 'deleteIngredient':'confirmDelete')" disabled="@load(empty vm.selected)" />
+    </toolbar>
+   <listbox model="@load(vm.products)" selectedItem="@bind(vm.selected)"  hflex="true" >
+         <listhead>
+                    <listheader hflex="min" label="id" sort="auto(id)" />
+                    <listheader hflex="3" label="Nombre" sort="auto(name)" />
+                    <listheader hflex="4" label="descripcion" sort="auto(description)" />
+                    <listheader hflex="1" label="Precio" sort="auto(price)" />
+
+                    <listheader hflex="2" label="Tipo" />
+                    <listheader hflex="min" label="opciones"/>
+        </listhead>
+       <template name="model" var="item">
+            <listitem >
+                <listcell label="@load(item.id)"/>                
+                <listcell label="@load(item.name)"/>
+                <listcell label="@load(item.description)"/>
+                <listcell label="@load(item.price)"/>
+                <listcell label="@load(item.productType.name)"/>
+                <listcell><button label="Delete" onClick="@command('confirmDelete2', item=item)"/></listcell>
+            </listitem>
+        </template>
+    </listbox>
+
+    
+    <window id="productModal" title="Detalles" mode="modal" onClose="@command('cerrarModal')" closable="true" position="center,center" border="normal" width="450px" visible="false">
+        <grid hflex="true" >
+             <rows>
+                <row>Id <label value="@load(vm.selected.id)"/></row>
+                <row>Nombre: <textbox value="@load(vm.selected.name) @save(vm.selected.name, after='saveProduct')" hflex="1"/></row>
+                <row>Descripcion: <textbox value="@load(vm.selected.description) @save(vm.selected.description, after='saveProduct')" hflex="1" rows="3"/></row>
+                <row>Precio: <decimalbox format="###.##" value="@load(vm.selected.price) @save(vm.selected.price, after='saveProduct')" hflex="1"/></row>
+                <row>Tipo de Producto:  <listbox model="@load(vm.productTypes)" selectedItem="@load(vm.selected.productType) @save(vm.selected.productType, after='saveProduct')"  hflex="true" mold="select">
+                    <template name="model" var="item">
+                        <listitem label="@load(item.name)"/>
+                    </template>
+                </listbox></row>
+                <row>
+                    <cell colspan="2" style="text-align:center">
+                         <hlayout>
+                            <button width="100px" label="Save" onClick="@command('saveProduct')" disabled="@load(empty vm.selected)" />
+                            <button width="100px" label="Cerrar" onClick="@command('cerrarModal')"/>
+                        </hlayout>
+                    </cell>
+                </row>
+           </rows>
+        </grid>
+    </window>
+    
+    <window title="Detalles" mode="modal" border="normal" width="300px" visible="@load(not empty vm.deleteMessage)">
+        <vbox hflex="true">
+            <hlayout height="50px">
+                <image src="~./zul/img/msgbox/question-btn.png"/>
+                <label value="@load(vm.deleteMessage)"/>
+            </hlayout>
+            <hbox pack="center" hflex="true">
+                <button label="Delete" onClick="@command('deleteIngredient')"/>
+                <button label="Cancel" onClick="@command('cancelDelete')"/>
+            </hbox>
+        </vbox>
+    </window>
+    
+</window>
+</zk>
