@@ -82,8 +82,5 @@ public class ProductType implements Serializable{
         hash = 19 * hash + (this.id != null ? this.id.hashCode() : 0);
         hash = 19 * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
-    }
-    
-    
-    
+    }    
 }
