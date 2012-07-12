@@ -35,10 +35,10 @@
         <grid hflex="true" >
              <rows>
                 <row>Id <label value="@load(vm.selected.id)"/></row>
-                <row>Nombre: <textbox value="@load(vm.selected.name) @save(vm.selected.name, after='saveProduct')" hflex="1"/></row>
-                <row>Descripcion: <textbox value="@load(vm.selected.description) @save(vm.selected.description, after='saveProduct')" hflex="1" rows="3"/></row>
-                <row>Precio: <decimalbox format="###.##" value="@load(vm.selected.price) @save(vm.selected.price, after='saveProduct')" hflex="1"/></row>
-                <row>Tipo de Producto:  <listbox model="@load(vm.productTypes)" selectedItem="@load(vm.selected.productType) @save(vm.selected.productType, after='saveProduct')"  hflex="true" mold="select">
+                <row>Nombre: <textbox value="@load(vm.selected.name) @save(vm.selected.name, before='saveProduct')" hflex="1"/></row>
+                <row>Descripcion: <textbox value="@load(vm.selected.description) @save(vm.selected.description, before='saveProduct')" hflex="1" rows="3"/></row>
+                <row>Precio: <decimalbox format="###.##" value="@load(vm.selected.price) @save(vm.selected.price, before='saveProduct')" hflex="1"/></row>
+                <row>Tipo de Producto:  <listbox model="@load(vm.productTypes)" selectedItem="@load(vm.selected.productType) @save(vm.selected.productType, before='saveProduct')"  hflex="true" mold="select">
                     <template name="model" var="item">
                         <listitem label="@load(item.name)"/>
                     </template>

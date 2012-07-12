@@ -58,6 +58,32 @@ public class EventAddress implements Serializable {
     public void setMap(String map) {
         this.map = map;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EventAddress other = (EventAddress) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        if ((this.alia == null) ? (other.alia != null) : !this.alia.equals(other.alia)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 29 * hash + (this.alia != null ? this.alia.hashCode() : 0);
+        return hash;
+    }
     
     
 }
