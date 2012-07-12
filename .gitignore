@@ -4,3 +4,8 @@
 *.jar
 *.war
 *.ear
+/miCuteCake/.settings/
+/miCuteCake/target/
+/miCuteCake/.classpath
+/miCuteCake/.project
+
