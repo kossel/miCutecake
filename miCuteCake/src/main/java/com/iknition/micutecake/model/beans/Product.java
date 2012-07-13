@@ -6,6 +6,7 @@ package com.iknition.micutecake.model.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.*;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +35,17 @@ public class Product implements Serializable{
     @JoinColumn(name="idproduct_type")
     private ProductType productType;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "products")
+    private List<Recipe> recipes;
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+    
     public ProductType getProductType() {
         return productType;
     }

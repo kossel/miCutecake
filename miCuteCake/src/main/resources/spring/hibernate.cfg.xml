@@ -14,6 +14,8 @@
         <mapping class="com.iknition.micutecake.model.beans.EventAddress" />
         <mapping class="com.iknition.micutecake.model.beans.Ingredient" />
         <mapping class="com.iknition.micutecake.model.beans.Product" />
+        <mapping class="com.iknition.micutecake.model.beans.Recipe" />
+        <mapping class="com.iknition.micutecake.model.beans.EleRecipe" />
     </session-factory>
 </hibernate-configuration>
  

@@ -68,6 +68,7 @@ public class ProductVM {
     @NotifyChange("selected")
     public void setSelected(Product selected) {
         this.selected = selected;
+        System.out.println(selected.getRecipes().size());
         this.openModal();
     }
 
