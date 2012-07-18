@@ -31,7 +31,7 @@
     </listbox>
 
     
-    <window id="productModal" title="Detalles" mode="modal" onClose="@command('cerrarModal')" closable="true" position="center,center" border="normal" width="450px" visible="false">
+    <window id="productModal" title="Detalles" mode="modal" onClose="@command('cerrarModal')" closable="true" position="center,center" border="normal" width="550px" visible="false">
         <grid hflex="true" >
              <rows>
                 <row>Id <label value="@load(vm.selected.id)"/></row>
@@ -43,6 +43,28 @@
                         <listitem label="@load(item.name)"/>
                     </template>
                 </listbox></row>
+                <row spans="2">
+                    <listbox model="@load(vm.selected.recipes)" selectedItem="@bind(vm.selectedRecipe)"  hflex="true" >
+                        <listhead>
+                                    <listheader hflex="min" label="id" sort="auto(id)" />
+                                    <listheader hflex="3" label="Nombre" sort="auto(name)" />
+                                    <listheader hflex="4" label="descripcion" sort="auto(description)" />
+                                    <listheader hflex="1" label="#" sort="auto(quantity)" />
+
+                                    <listheader hflex="min" label="opciones"/>
+                        </listhead>
+                            <template name="model" var="item">
+                            <listitem >
+                                <listcell label="@load(item.id)"/>                
+                                <listcell label="@load(item.name)"/>
+                                <listcell label="@load(item.description)"/>
+                                <listcell label="@load(item.quantity)"/>
+                                <listcell><button label="Delete" onClick="@command('confirmDeleteRecipe', item=item)"/></listcell>
+                            </listitem>
+                        </template>
+                    </listbox>
+                    
+                </row>
                 <row>
                     <cell colspan="2" style="text-align:center">
                          <hlayout>

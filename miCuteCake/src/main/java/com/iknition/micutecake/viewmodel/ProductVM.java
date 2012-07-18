@@ -6,16 +6,20 @@ package com.iknition.micutecake.viewmodel;
 
 import com.iknition.micutecake.model.beans.Product;
 import com.iknition.micutecake.model.beans.ProductType;
+import com.iknition.micutecake.model.beans.Recipe;
 import com.iknition.micutecake.services.ProductService;
 import com.iknition.micutecake.services.ProductTypeService;
+import com.iknition.micutecake.services.RecipeService;
 import java.util.List;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 /**
@@ -27,6 +31,7 @@ public class ProductVM {
     private ListModelList<ProductType> productTypes;
     
     private Product selected;
+    private Recipe selectedRecipe;
     private String deleteMessage;
     
     @Wire("#productModal")
@@ -37,6 +42,9 @@ public class ProductVM {
     
     @WireVariable
     private ProductTypeService productTypeService;
+    
+//    @WireVariable
+//    private RecipeService recipeService;
 
     @Init
     public void init(@ContextParam(ContextType.VIEW) Component view){
@@ -67,8 +75,8 @@ public class ProductVM {
     
     @NotifyChange("selected")
     public void setSelected(Product selected) {
-        this.selected = selected;
-        System.out.println(selected.getRecipes().size());
+        this.selected = this.getProductService().getProductWithRecipes(selected.getId());
+        System.out.println("el tamanio " +this.selected.getRecipes().size());
         this.openModal();
     }
 
@@ -82,6 +90,21 @@ public class ProductVM {
     @Command
     public void openModal(){
         this.productModal.setVisible(true);
+    }
+    
+    @Command
+    public void confirmDeleteRecipe(@BindingParam("item") Product item){
+        Messagebox.show("Estas seguro que desea borrar recepta " + item.getName()+"?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
+                new org.zkoss.zk.ui.event.EventListener(){
+                    public void onEvent(Event e){
+                        if(Messagebox.ON_OK.equals(e.getName())){
+                            deleteRecipe();
+                        }else if(Messagebox.ON_CANCEL.equals(e.getName())){
+                           System.out.println(" fue cancel ");
+                        }
+                    }
+        }
+                );
     }
     
     @Command 
@@ -115,6 +138,13 @@ public class ProductVM {
         this.deleteMessage=null;
     }
 
+    @NotifyChange({"selectedRecipe","selected.recipes"})
+    public void deleteRecipe(){
+        //delete with service
+        this.selected.getRecipes().remove(this.selectedRecipe);
+        selected = null; //clean the selected
+    }
+    
     @Command @NotifyChange({"selected","products", "deleteMessage"})
     public void confirmDelete2(@BindingParam("item") Product item ) {
          this.selected=item;
@@ -166,6 +196,15 @@ public class ProductVM {
     public void setProductTypeService(ProductTypeService productTypeService) {
         this.productTypeService = productTypeService;
     }
+
+    public Recipe getSelectedRecipe() {
+        return selectedRecipe;
+    }
+
+    public void setSelectedRecipe(Recipe selectedRecipe) {
+        this.selectedRecipe = selectedRecipe;
+    }
+    
     
     
 }

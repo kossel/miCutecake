@@ -17,6 +17,7 @@ public class Recipe {
     
     @Id
     @GeneratedValue
+    @Column(name="idRecipe")
     private Integer id;
     @Column
     private String name;
@@ -24,10 +25,13 @@ public class Recipe {
     private String Description;
     @Column
     private int quantity;
+    
     @ManyToOne
+    @JoinColumn(name="idproduct")
     private Product product;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ele_recipe")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="id_ele_recipe")
     private List<EleRecipe> eleRecipe;
 
     public String getDescription() {

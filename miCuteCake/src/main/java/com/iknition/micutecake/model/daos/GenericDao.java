@@ -5,6 +5,7 @@
 package com.iknition.micutecake.model.daos;
 
 import java.util.List;
+import org.hibernate.Session;
 
 /**
  *
@@ -31,6 +32,7 @@ public interface GenericDao<DomainObject, KeyType> {
     public boolean exists(KeyType id);
     
    // public void deleteAll();
+    public Session getSerssion();
     
     public int count();
 	    

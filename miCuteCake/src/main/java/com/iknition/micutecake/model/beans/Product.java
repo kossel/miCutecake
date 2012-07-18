@@ -35,7 +35,7 @@ public class Product implements Serializable{
     @JoinColumn(name="idproduct_type")
     private ProductType productType;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "products")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="product")
     private List<Recipe> recipes;
 
     public List<Recipe> getRecipes() {

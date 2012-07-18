@@ -40,6 +40,9 @@ public abstract class GenericDaoImpl <T extends Serializable,
         this.sessionFactory = sessionFactory;
     }
     
+    public Session getSerssion(){
+        return this.getSessionFactory().getCurrentSession();
+    }
     
     /**
      * Method to return the class of the domain object
