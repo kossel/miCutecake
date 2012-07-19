@@ -10,6 +10,7 @@ import com.iknition.micutecake.model.beans.Recipe;
 import com.iknition.micutecake.services.ProductService;
 import com.iknition.micutecake.services.ProductTypeService;
 import com.iknition.micutecake.services.RecipeService;
+import java.util.ArrayList;
 import java.util.List;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.annotation.*;
@@ -19,6 +20,7 @@ import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
@@ -29,6 +31,7 @@ import org.zkoss.zul.Window;
 public class ProductVM {
     private ListModelList<Product> products;
     private ListModelList<ProductType> productTypes;
+    private ListModelList<Recipe> recipes;
     
     private Product selected;
     private Recipe selectedRecipe;
@@ -43,8 +46,8 @@ public class ProductVM {
     @WireVariable
     private ProductTypeService productTypeService;
     
-//    @WireVariable
-//    private RecipeService recipeService;
+    @WireVariable
+    private RecipeService recipeService;
 
     @Init
     public void init(@ContextParam(ContextType.VIEW) Component view){
@@ -61,7 +64,7 @@ public class ProductVM {
             products = new ListModelList<Product>(a);//init the list
         }
         return products;
-    }
+    }   
     
     public ListModelList<ProductType> getProductTypes() {
         if (productTypes == null) {
@@ -73,32 +76,38 @@ public class ProductVM {
     }
 
     
-    @NotifyChange("selected")
+    @NotifyChange({"selected","recipes"})
     public void setSelected(Product selected) {
         this.selected = this.getProductService().getProductWithRecipes(selected.getId());
-        System.out.println("el tamanio " +this.selected.getRecipes().size());
+        List a = this.selected.getRecipes();
+        this.recipes = new ListModelList<Recipe>(a);
         this.openModal();
     }
 
     public Product getSelected() {
-        System.out.println("getselected");
         return selected;
     }
-    
-    
-    
+
+    public ListModelList<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(ListModelList<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
     @Command
     public void openModal(){
         this.productModal.setVisible(true);
     }
     
     @Command
-    public void confirmDeleteRecipe(@BindingParam("item") Product item){
+    public void confirmDeleteRecipe(@BindingParam("item") final Recipe item){
         Messagebox.show("Estas seguro que desea borrar recepta " + item.getName()+"?", "Question", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
                 new org.zkoss.zk.ui.event.EventListener(){
                     public void onEvent(Event e){
                         if(Messagebox.ON_OK.equals(e.getName())){
-                            deleteRecipe();
+                            deleteRecipe(item);
                         }else if(Messagebox.ON_CANCEL.equals(e.getName())){
                            System.out.println(" fue cancel ");
                         }
@@ -111,7 +120,7 @@ public class ProductVM {
     @NotifyChange({"selected","products"})
     public void newProduct(){
         Product product = new Product();
-     //   this.getConceptTypes().add(conceptType);
+     //this.getConceptTypes().add(conceptType);
         selected = product;//select the new one
         this.openModal();
         
@@ -138,11 +147,12 @@ public class ProductVM {
         this.deleteMessage=null;
     }
 
-    @NotifyChange({"selectedRecipe","selected.recipes"})
-    public void deleteRecipe(){
+    @NotifyChange({"recipes","selected"})
+    public void deleteRecipe(Recipe r){
         //delete with service
-        this.selected.getRecipes().remove(this.selectedRecipe);
-        selected = null; //clean the selected
+        recipeService.delete(r.getId());
+        this.selected.getRecipes().remove(r);
+        this.recipes.remove(r);
     }
     
     @Command @NotifyChange({"selected","products", "deleteMessage"})

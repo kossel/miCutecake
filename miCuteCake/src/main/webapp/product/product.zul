@@ -8,7 +8,7 @@
         
         <button label="Delete" onClick="@command(empty vm.selected.id? 'deleteIngredient':'confirmDelete')" disabled="@load(empty vm.selected)" />
     </toolbar>
-   <listbox model="@load(vm.products)" selectedItem="@bind(vm.selected)"  hflex="true" >
+   <listbox model="@load(vm.products)" selectedItem="@bind(vm.selected)"  hflex="true"  >
          <listhead>
                     <listheader hflex="min" label="id" sort="auto(id)" />
                     <listheader hflex="3" label="Nombre" sort="auto(name)" />
@@ -44,7 +44,7 @@
                     </template>
                 </listbox></row>
                 <row spans="2">
-                    <listbox model="@load(vm.selected.recipes)" selectedItem="@bind(vm.selectedRecipe)"  hflex="true" >
+                    <listbox model="@load(vm.recipes)" selectedItem="@bind(vm.selectedRecipe)"  hflex="true" id="recipegrid" >
                         <listhead>
                                     <listheader hflex="min" label="id" sort="auto(id)" />
                                     <listheader hflex="3" label="Nombre" sort="auto(name)" />

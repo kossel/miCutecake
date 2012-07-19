@@ -31,11 +31,11 @@ public class Product implements Serializable{
     @Column
     private BigDecimal price;
     
-    @ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER, optional=false)
+    @ManyToOne(fetch=FetchType.EAGER, optional=false)
     @JoinColumn(name="idproduct_type")
     private ProductType productType;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="product")
+    @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="product")
     private List<Recipe> recipes;
 
     public List<Recipe> getRecipes() {

@@ -4,6 +4,7 @@
  */
 package com.iknition.micutecake.model.beans;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.*;
 
@@ -13,7 +14,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "ele_recipe")
-public class EleRecipe {
+public class EleRecipe implements Serializable{
     
     @Id
     @GeneratedValue
@@ -24,11 +25,11 @@ public class EleRecipe {
     @Column
     private String unit;
     
-    @ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY, optional=false)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="idRecipe")
     private Recipe recipe;
     
-    @ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY, optional=false)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="idIngredient")
     private Ingredient ingredient;
 
