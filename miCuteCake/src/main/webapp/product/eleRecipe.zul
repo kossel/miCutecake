@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window border="none" 
+        apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.iknition.micutecake.viewmodel.EleRecipeVM')">
+        <toolbar>
+            <button label="agregar" onClick="@command('addIngredient')" />
+        </toolbar>
+            <listbox model="@load(vm.ingredients)" selectedItem="@bind(vm.selected)"  hflex="true"  >
+            <listhead>
+                        <listheader hflex="min" label="id"/>
+                        <listheader hflex="3" label="Nombre"/>
+                        <listheader hflex="2" label="precio"/>
+                        <listheader hflex="1" label="Cantidad"/>
+                        <listheader hflex="1" label="unidad"/>
+
+                        <listheader hflex="min" label="opciones"/>
+            </listhead>
+        <template name="model" var="item">
+                <listitem >
+                    <listcell label="@load(item.id)"/>                
+                    <listcell label="@load(item.recipe.name)"/>
+                    <listcell label="@load(item.recipe.price)"/>
+                    <listcell label="@load(item.quantity)"/>
+                    <listcell label="@load(item.recipe.unit)"/>
+                    <listcell><button label="Delete" onClick="@command('confirmDelete', item=item)"/></listcell>
+                </listitem>
+            </template>
+        </listbox>
+    
+</window>
+</zk>

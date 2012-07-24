@@ -31,7 +31,7 @@ public class Recipe implements Serializable{
     @JoinColumn(name="idproduct")
     private Product product;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="recipe")
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy="recipe")
     private List<EleRecipe> eleRecipe;
 
     public String getDescription() {

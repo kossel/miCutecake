@@ -30,5 +30,5 @@ public class EventAddrServiceImpl extends GenericServiceImpl<EventAddress, Integ
         this.eventAddrDao = eventAddrDao;
         this.dao = eventAddrDao;
     }
-    
+     
 }

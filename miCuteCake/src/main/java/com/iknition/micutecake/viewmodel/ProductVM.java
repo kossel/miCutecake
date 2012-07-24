@@ -15,6 +15,7 @@ import java.util.List;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -131,7 +132,8 @@ public class ProductVM {
         getProductService().saveOrUpdate(selected);
         int idx = this.getProducts().indexOf(selected);
         if(idx>=0){
-            this.getProducts().remove(selected);
+            boolean a = this.getProducts().remove(selected);
+            System.out.println("system "+ a);
             this.getProducts().add(idx, selected);
         }else{
             this.getProducts().add(selected);
@@ -150,7 +152,7 @@ public class ProductVM {
     @NotifyChange({"recipes","selected"})
     public void deleteRecipe(Recipe r){
         //delete with service
-        recipeService.delete(r.getId());
+     //   recipeService.delete(r.getId());
         this.selected.getRecipes().remove(r);
         this.recipes.remove(r);
     }
@@ -181,7 +183,13 @@ public class ProductVM {
         deleteMessage = null;
     }
  
-  
+    @Command
+    public void openDetailRecipeModal() {
+        Component comp = Executions.createComponents("/product/eleRecipe.zul", null, null);
+        if(comp instanceof Window) {
+            ((Window)comp).doModal();
+        }
+    }
 
     public String getDeleteMessage() {
         return deleteMessage;

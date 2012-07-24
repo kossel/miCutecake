@@ -7,6 +7,7 @@ package com.iknition.micutecake.model.beans;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.*;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -14,6 +15,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "ele_recipe")
+@Component("eleRecipe")
 public class EleRecipe implements Serializable{
     
     @Id
