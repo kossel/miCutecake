@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
-    <window border="none" 
-        apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.iknition.micutecake.viewmodel.EleRecipeVM')">
+    <window title="Ingredientes necesarios" border="true" closable="true" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.iknition.micutecake.viewmodel.EleRecipeVM')" height="450px" width="600px">
         <toolbar>
-            <button label="agregar" onClick="@command('addIngredient')" />
+            <hlayout>
+                <label>Ingrediente:</label>
+                <listbox model="@load(vm.ingredientsList)" selectedItem="@load(vm.newEleRecipe.ingredient) @save(vm.newEleRecipe.ingredient, before='saveProduct')"  hflex="true" mold="select">
+                    <template name="model" var="item">
+                        <listitem label="@load(item.name)"/>
+                    </template>
+                </listbox>
+                <textbox value="@load(vm.newEleRecipe.quantity.) @save(vm.newEleRecipe.quantity, before='saveProduct')" hflex="1" rows="3"/>
+                <toolbarbutton label="Agregar" onClick="@command('addIngredient')" />
+                </hlayout>
         </toolbar>
             <listbox model="@load(vm.ingredients)" selectedItem="@bind(vm.selected)"  hflex="true"  >
             <listhead>
-                        <listheader hflex="min" label="id"/>
-                        <listheader hflex="3" label="Nombre"/>
-                        <listheader hflex="2" label="precio"/>
-                        <listheader hflex="1" label="Cantidad"/>
-                        <listheader hflex="1" label="unidad"/>
-
+                        <listheader hflex="min" label="Cantidad" sort="auto(item.quantity)"/>
+                        <listheader hflex="1" label="unidad" sort="auto(item.ingredient.unit)"/>
+                        <listheader hflex="3" label="Nombre" sort="auto(item.ingredient.name)"/>
+                        <listheader hflex="2" label="precio" sort="auto(item.ingredient.price)"/>
                         <listheader hflex="min" label="opciones"/>
             </listhead>
         <template name="model" var="item">
                 <listitem >
-                    <listcell label="@load(item.id)"/>                
-                    <listcell label="@load(item.recipe.name)"/>
-                    <listcell label="@load(item.recipe.price)"/>
                     <listcell label="@load(item.quantity)"/>
-                    <listcell label="@load(item.recipe.unit)"/>
+                    <listcell label="@load(item.ingredient.unit)"/>
+<!--                    <listcell label="@load(item.id)"/>                -->
+                    <listcell label="@load(item.ingredient.name)"/>
+                    <listcell label="@load(item.ingredient.price)"/>
                     <listcell><button label="Delete" onClick="@command('confirmDelete', item=item)"/></listcell>
                 </listitem>
             </template>
         </listbox>
-    
 </window>
+
+
 </zk>
