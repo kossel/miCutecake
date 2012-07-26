@@ -3,15 +3,17 @@
 <zk xmlns="http://www.zkoss.org/2005/zul">
     <window title="Ingredientes necesarios" border="true" closable="true" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.iknition.micutecake.viewmodel.EleRecipeVM')" height="450px" width="600px">
         <toolbar>
-            <hlayout>
-                <label>Ingrediente:</label>
-                <listbox model="@load(vm.ingredientsList)" selectedItem="@load(vm.newEleRecipe.ingredient) @save(vm.newEleRecipe.ingredient, before='saveProduct')"  hflex="true" mold="select">
+            <hlayout width="100%">
+                <label hflex="min">Ingrediente:</label>
+                <listbox model="@load(vm.ingredientsList)" selectedItem="@load(vm.newEleRecipe.ingredient) @save(vm.newEleRecipe.ingredient)" hflex="1" mold="select">
                     <template name="model" var="item">
                         <listitem label="@load(item.name)"/>
                     </template>
                 </listbox>
-                <textbox value="@load(vm.newEleRecipe.quantity.) @save(vm.newEleRecipe.quantity, before='saveProduct')" hflex="1" rows="3"/>
-                <toolbarbutton label="Agregar" onClick="@command('addIngredient')" />
+                <decimalbox format="###.##" value="@load(vm.newEleRecipe.quantity) @save(vm.newEleRecipe.quantity, before='addIngredient')" width="40px" />
+                <label value="@load(vm.newEleRecipe.ingredient.unit)"></label>
+                <separator spacing="20px"/>
+                <button label="Agregar" onClick="@command('addIngredient')" />
                 </hlayout>
         </toolbar>
             <listbox model="@load(vm.ingredients)" selectedItem="@bind(vm.selected)"  hflex="true"  >

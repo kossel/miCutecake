@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface EleRecipeService extends GenericService<EleRecipe, Integer>{
     public List<EleRecipe> getByRecipe(Integer id);
+    public void saveWithoutDuplicate(EleRecipe ele);
 }

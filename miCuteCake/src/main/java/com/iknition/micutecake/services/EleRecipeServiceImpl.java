@@ -24,6 +24,7 @@ public class EleRecipeServiceImpl extends GenericServiceImpl<EleRecipe,Integer> 
         return eleRecipeDao;
     }
 
+    
     @Resource
     public void setEleRecipeDao(EleRecipeDao eleRecipeDao) {
         this.eleRecipeDao = eleRecipeDao;
@@ -36,6 +37,17 @@ public class EleRecipeServiceImpl extends GenericServiceImpl<EleRecipe,Integer> 
     public List<EleRecipe> getByRecipe(Integer id) {
         List<EleRecipe> list = eleRecipeDao.getIngredientsByRecipe(id);
         return list;
+    }
+    
+    @Resource
+    @Transactional
+    public void saveWithoutDuplicate(EleRecipe ele) {
+        List<EleRecipe> foundEles = this.eleRecipeDao.getIngredientsByRecipe(ele.getIngredient().getId());
+        if(foundEles==null){
+            this.save(ele);
+        }else{
+            EleRecipe existedEle = foundEles.get(index)
+        }
     }
     
 }

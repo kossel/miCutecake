@@ -59,7 +59,7 @@
                                 <listcell label="@load(item.name)"/>
                                 <listcell label="@load(item.description)"/>
                                 <listcell label="@load(item.quantity)"/>
-                                <listcell><button label="Detalles" onClick="@command('openDetailRecipeModal') @global-command('showDetailRecipe', id=item.id)"/><button label="Delete" onClick="@command('confirmDeleteRecipe', item=item)"/></listcell>
+                                <listcell><button label="Detalles" onClick="@command('openDetailRecipeModal') @global-command('showDetailRecipe', item=item)"/><button label="Delete" onClick="@command('confirmDeleteRecipe', item=item)"/></listcell>
                             </listitem>
                         </template>
                     </listbox>

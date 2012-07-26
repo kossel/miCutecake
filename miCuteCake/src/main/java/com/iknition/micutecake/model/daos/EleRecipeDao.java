@@ -14,5 +14,6 @@ import java.util.List;
 public interface EleRecipeDao extends GenericDao<EleRecipe,Integer> {
     
     public List<EleRecipe> getIngredientsByRecipe(Integer id);
+    public List<EleRecipe> getByIngredient(Integer id);
     
 }

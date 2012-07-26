@@ -26,5 +26,16 @@ public class EleRecipeDaoImpl extends GenericDaoImpl<EleRecipe,Integer> implemen
         //Hibernate.initialize(product.getRecipes());
         return eleRecipes;
     }
+
+    @Override
+    public List<EleRecipe> getByIngredient(Integer id) {
+        Query query = this.getSerssion().createQuery("from EleRecipe e where e.ingredient.id = ? ");
+        query.setParameter(0, id);
+        List<EleRecipe> eleRecipes = (List<EleRecipe>)query.list();
+        //Hibernate.initialize(product.getRecipes());
+        return eleRecipes;
+    }
+    
+    
     
 }
