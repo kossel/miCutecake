@@ -16,7 +16,7 @@
                 <button label="Agregar" onClick="@command('addIngredient')" />
                 </hlayout>
         </toolbar>
-            <listbox model="@load(vm.ingredients)" selectedItem="@bind(vm.selected)"  hflex="true"  >
+            <listbox model="@load(vm.ingredients)" selectedItem="@bind(vm.selected)"  hflex="true" height="350px">
             <listhead>
                         <listheader hflex="min" label="Cantidad" sort="auto(item.quantity)"/>
                         <listheader hflex="1" label="unidad" sort="auto(item.ingredient.unit)"/>

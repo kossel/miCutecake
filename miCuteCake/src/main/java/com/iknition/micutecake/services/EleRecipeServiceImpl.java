@@ -6,6 +6,7 @@ package com.iknition.micutecake.services;
 
 import com.iknition.micutecake.model.beans.EleRecipe;
 import com.iknition.micutecake.model.daos.EleRecipeDao;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -39,14 +40,17 @@ public class EleRecipeServiceImpl extends GenericServiceImpl<EleRecipe,Integer> 
         return list;
     }
     
-    @Resource
+    @Override
     @Transactional
     public void saveWithoutDuplicate(EleRecipe ele) {
-        List<EleRecipe> foundEles = this.eleRecipeDao.getIngredientsByRecipe(ele.getIngredient().getId());
-        if(foundEles==null){
+        List<EleRecipe> foundEles = this.eleRecipeDao.getByIngredient(ele.getIngredient().getId());
+        if(foundEles==null||foundEles.size()<1){
             this.save(ele);
         }else{
-            EleRecipe existedEle = foundEles.get(index)
+            EleRecipe existedEle = foundEles.get(0);
+            BigDecimal newQuantity = ele.getQuantity().add(existedEle.getQuantity());
+            existedEle.setQuantity(newQuantity);
+            this.merge(existedEle);
         }
     }
     

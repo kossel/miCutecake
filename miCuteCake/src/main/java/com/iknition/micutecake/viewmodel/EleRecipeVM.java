@@ -47,7 +47,7 @@ public class EleRecipeVM {
     @Command
     public void addIngredient(){
         this.getNewEleRecipe().setUnit(this.getNewEleRecipe().getIngredient().getUnit());
-        this.getEleRecipeService().save(this.getNewEleRecipe()); 
+        this.getEleRecipeService().saveWithoutDuplicate(this.getNewEleRecipe()); 
         this.getIngredients().add(this.getNewEleRecipe());
     }
     
