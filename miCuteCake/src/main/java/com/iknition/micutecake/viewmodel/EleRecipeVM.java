@@ -9,6 +9,7 @@ import com.iknition.micutecake.services.EleRecipeService;
 import com.iknition.micutecake.services.EventAddrService;
 import com.iknition.micutecake.services.IngredientService;
 import com.iknition.micutecake.services.ProductService;
+import java.math.BigDecimal;
 import java.util.List;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -44,11 +45,28 @@ public class EleRecipeVM {
             this.newEleRecipe.setRecipe(item);
     }
     
-    @Command
+    @Command @NotifyChange("ingredients")
     public void addIngredient(){
         this.getNewEleRecipe().setUnit(this.getNewEleRecipe().getIngredient().getUnit());
         this.getEleRecipeService().saveWithoutDuplicate(this.getNewEleRecipe()); 
-        this.getIngredients().add(this.getNewEleRecipe());
+        mergeToList(this.getNewEleRecipe());
+    }
+    
+    
+    private void mergeToList(EleRecipe ele){
+        for(int i=0; i<this.getIngredients().getSize(); i++){
+            EleRecipe eleActual = this.getIngredients().get(i);
+            if(eleActual.getIngredient().getId().equals(ele.getIngredient().getId())){
+                eleActual.setQuantity(eleActual.getQuantity().add(ele.getQuantity()));
+                return;
+            }
+        }
+        EleRecipe eDuplicated = new EleRecipe();
+        eDuplicated.setIngredient(ele.getIngredient());
+        eDuplicated.setQuantity(ele.getQuantity());
+        eDuplicated.setRecipe(ele.getRecipe());
+        eDuplicated.setUnit(ele.getUnit());
+        this.getIngredients().add(eDuplicated);
     }
     
     public ListModelList<EleRecipe> getIngredients() {
